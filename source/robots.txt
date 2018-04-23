@@ -1,0 +1,12 @@
+# hexo robots.txt
+User-agent: *
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /lib/
+Disallow: /react-native/
+Disallow: /search.json
+
+Sitemap: https://www.shifeng1993.com/sitemap.xml
+Sitemap: https://www.shifeng1993.com/baidusitemap.xml
