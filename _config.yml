@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 师峰的个人站
+title: 师峰的博客
 subtitle: 正在面向工资编程
-keywords: 师峰，师峰个人站，师峰博客
-description: 师峰的个人站，为了面向工资编程而建。包括js算法，vue, react, react native, nodejs, 数据库等栈和框架，以及C/C++，AI人工智能，python，android，ios的学习研究分享。
+keywords: 师峰,师峰博客,师峰的个人站
+description: 师峰的博客，为了面向工资编程而建。包括js算法，vue, react, react native, nodejs, 数据库等栈和框架，以及C/C++，AI人工智能，python，android，ios的学习研究分享。
 author: 海色
 language: zh-Hans
 # timezone:
