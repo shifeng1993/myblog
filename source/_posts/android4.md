@@ -1,11 +1,11 @@
 ---
-title: 【android学习随笔】安卓常用布局
+title: 【android学习随笔】安卓常用布局以及自定义控件
 categories: android
 date: 2018-05-04
 tags:
   - android
 ---
-今天五四青年节，，不要问我为啥子悲伤。。。
+今天五四青年节，五四青年节为啥不放假，性质不是和三八妇女节一样吗。。。
 
 # 四种基本布局
 ## 线性布局（LinearLayout）
@@ -219,3 +219,65 @@ dependencies {
 
 ## 绝对定位布局（AbsoluteLayout）
 ## 表格布局（TableLayout）
+
+# 自定义控件
+<img src="./android布局控件继承结构.png" title="android布局控件继承结构"/>
+如上图我们所用的所有控件都是直接或间接继承自 View 的，所用的所有布局都是直接 或间接继承自 ViewGroup 的。有时候控件满足不了需求。就会用自定义控件。
+## 先新建一个组件比如导航栏， 命名为navigation
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@drawable/title_bg">
+    <Button
+        android:id="@+id/title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/back_bg"
+        android:text="Back"
+        android:textColor="#fff" />
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Title Text"
+        android:textColor="#fff"
+        android:textSize="24sp" />
+    <Button
+        android:id="@+id/title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/edit_bg"
+        android:text="Edit"
+        android:textColor="#fff" />
+</LinearLayout>
+```
+## 在使用到导航栏的xml中引入
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <include layout="@layout/navigation" />
+</LinearLayout>
+```
+## 如果是导航栏还需要去掉活动本身自带的导航栏
+```java
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+        ActionBar actionbar = getSupportActionBar(); 
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+    }
+}
+```
