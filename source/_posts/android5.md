@@ -6,7 +6,6 @@ tags:
   - android
 ---
 
-# ListView
 ## 添加xml布局
 ```xml
 <ListView
