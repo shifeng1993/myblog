@@ -1,5 +1,5 @@
 ---
-title: 【android学习随笔】安卓常用事件和控件
+title: 【android学习随笔】android常用事件和控件
 categories: android
 date: 2018-04-27
 tags:

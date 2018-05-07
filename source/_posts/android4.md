@@ -1,5 +1,5 @@
 ---
-title: 【android学习随笔】安卓常用布局以及自定义控件
+title: 【android学习随笔】android常用布局以及自定义控件
 categories: android
 date: 2018-05-04
 tags:
@@ -260,6 +260,7 @@ dependencies {
 </LinearLayout>
 ```
 ## 在使用到导航栏的xml中引入
+缺点：不会注册事件等，只是布局。
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -279,5 +280,49 @@ public class MainActivity extends AppCompatActivity {
             actionbar.hide();
         }
     }
+}
+```
+
+## 新建NavigationLayout继承LinearLayout
+在构造函数内加入构造方法
+LayoutInflater 的 from()方法可以构建出一个 LayoutInflater 对象，然后调用 inflate()方法就可以动态加载一个布局文件，inflate()方法接收两个参数，第一个参数是要加载的布局文件的 id，第二个参数是给加载好的布局再添加一个父布局。
+```java
+public class NavigationLayout extends LinearLayout {
+    public NavigationLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        LayoutInflater.from(context).inflate(R.layout.title, this);
+    } 
+}
+```
+## xml中
+自定义控件必须要是完整类名
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" >
+    <com.example.uicustomviews.NavigationLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+</LinearLayout>
+```
+## 注册点击事件
+```java
+public class NavigationLayout extends LinearLayout {
+    public NavigationLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        LayoutInflater.from(context).inflate(R.layout.navigation, this);
+        Button titleBack = (Button) findViewById(R.id.title_back); 
+        Button titleEdit = (Button) findViewById(R.id.title_edit); 
+        titleBack.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  ((Activity) getContext()).finish();
+                } 
+        });
+        titleEdit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "You clicked Edit button", Toast.LENGTH_SHORT).show();
+            }
+        });
+    } 
 }
 ```

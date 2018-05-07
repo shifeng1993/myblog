@@ -1,5 +1,5 @@
 ---
-title: 【android学习随笔】activity 活动
+title: 【android学习随笔】android activity 活动
 categories: android
 date: 2018-04-18
 tags:
