@@ -1,5 +1,5 @@
 ---
-title: 【android学习随笔】android滚动组件ListView
+title: 【android学习随笔】android列表组件ListView
 categories: android
 date: 2018-05-07
 tags:
@@ -171,7 +171,7 @@ public class FruitAdapter extends ArrayAdapter<Fruit> {
 ```java
 public class MainActivity extends AppCompatActivity {
     private List<Fruit> fruitList = new ArrayList<>();
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
