@@ -5,6 +5,7 @@ date: 2018-05-07
 tags:
   - android
 ---
+# 基本用法
 ## 添加依赖
 `app/build.gradle`
 ```java
@@ -15,7 +16,17 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 ```
-然后点击sync now
+关于 `compile` android在8.0改成了 `implementation` 所以8.0+可以写成以下代码
+```java
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
+}
+```
+
+然后点击sync now，同步编译配置
 
 ## 添加xml布局
 ```xml
@@ -26,3 +37,201 @@ dependencies {
         android:layout_height="match_parent" />
 </LinearLayout>
 ``` 
+
+## 添加item类
+```java
+public class Fruit {
+
+    private String name;
+    private int imageId;
+
+    public Fruit(String name, int imageId) {
+        this.name = name;
+        this.imageId = imageId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+}
+```
+
+## 定义item布局
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/fruit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/fruit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp" />
+</LinearLayout>
+```
+
+## 定义适配器类FruitAdapter 继承自 RecyclerView.Adapter
+```java
+public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> {
+    private List<Fruit> mFruitList;
+
+    // 定义了一个内部类 ViewHolder 继承自 RecyclerView.ViewHolder
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView fruitImage;
+        TextView fruitName;
+
+        public ViewHolder(View view) {
+            super(view);
+            fruitImage = (ImageView) view.findViewById(R.id.fruit_image);
+            fruitName = (TextView) view.findViewById(R.id.fruit_name);
+        }
+    }
+
+    // 通过 FruitAdapter 构造函数把需要展示的源数据传递进来，并赋值给当前类的私有变量 mFruitList
+    public FruitAdapter(List<Fruit> fruitList) {
+        mFruitList = fruitList;
+    }
+
+    // 先加载item布局，然后创建ViewHolder实例，
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fruit_item, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
+    }
+
+    // 对item进行赋值，会在每个子项被滚动到屏幕内的时候执行，使用position得到当前item实例，将数据灌入ViewHolder的布局中
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Fruit fruit = mFruitList.get(position);
+        holder.fruitImage.setImageResource(fruit.getImageId());
+        holder.fruitName.setText(fruit.getName());
+    }
+
+    // 返回数据源的数组长度
+    @Override
+    public int getItemCount() {
+        return mFruitList.size();
+    }
+}
+```
+
+## 修改mainActivity引入
+```java
+public class MainActivity extends AppCompatActivity {
+    private List<Fruit> fruitList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initFruits();                                                                // 初始化水果数据
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view); // 获取RecyclerView实例
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);           // 创建layoutManager对象，
+        recyclerView.setLayoutManager(layoutManager);                                // 指定布局方式
+        FruitAdapter adapter = new FruitAdapter(fruitList);                          // list数据传到适配器中
+        recyclerView.setAdapter(adapter);                                            // 完成适配器设置
+    }
+    // mock一个列表
+    private void initFruits() {
+        for (int i = 0; i < 100; i++) {
+            Fruit apple = new Fruit("Apple", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(apple);
+            Fruit banana = new Fruit("Banana", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(banana);
+            Fruit orange = new Fruit("Orange", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(orange);
+            Fruit watermelon = new Fruit("Watermelon", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(watermelon);
+            Fruit pear = new Fruit("Pear", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(pear);
+            Fruit grape = new Fruit("Grape", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(grape);
+            Fruit pineapple = new Fruit("Pineapple", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(pineapple);
+            Fruit strawberry = new Fruit("Strawberry", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(strawberry);
+            Fruit cherry = new Fruit("Cherry", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(cherry);
+            Fruit mango = new Fruit("Mango", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(mango);
+        }
+    }
+}
+```
+# 实现横向滚动和瀑布流
+## 横向滚动
+### fruit_item.xml改成垂直布局
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/fruit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/fruit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+</LinearLayout>
+```
+### MainActivity 设置垂直布局
+```java
+public class MainActivity extends AppCompatActivity {
+    private List<Fruit> fruitList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initFruits();                                                                // 初始化水果数据
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view); // 获取RecyclerView实例
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);    // 创建layoutManager对象，
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);                                // 指定布局方式
+        FruitAdapter adapter = new FruitAdapter(fruitList);                          // list数据传到适配器中
+        recyclerView.setAdapter(adapter);                                            // 完成适配器设置
+    }
+    // mock一个列表
+    private void initFruits() {
+        for (int i = 0; i < 100; i++) {
+            Fruit apple = new Fruit("Apple", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(apple);
+            Fruit banana = new Fruit("Banana", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(banana);
+            Fruit orange = new Fruit("Orange", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(orange);
+            Fruit watermelon = new Fruit("Watermelon", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(watermelon);
+            Fruit pear = new Fruit("Pear", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(pear);
+            Fruit grape = new Fruit("Grape", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(grape);
+            Fruit pineapple = new Fruit("Pineapple", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(pineapple);
+            Fruit strawberry = new Fruit("Strawberry", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(strawberry);
+            Fruit cherry = new Fruit("Cherry", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(cherry);
+            Fruit mango = new Fruit("Mango", R.drawable.ic_accessibility_black_24dp);
+            fruitList.add(mango);
+        }
+    }
+}
+```
+## 瀑布流
