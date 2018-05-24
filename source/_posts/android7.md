@@ -175,3 +175,14 @@ public class MainActivity extends AppCompatActivity {
 
 ```
 ## 发送有序广播
+
+### 定义接收器
+```java
+public class AnotherBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "received in AnotherBroadcastReceiver", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+### 动态注册
