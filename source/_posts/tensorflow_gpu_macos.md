@@ -1,5 +1,5 @@
 ---
-title: 【tensorflow】macOS 10.13.4 编译 GPU 版本的 TensorFlow 1.8 版本
+title: 【tensorflow】macOS 10.13.4 编译 GPU 版本的 TensorFlow 1.8
 categories: tensorflow
 date: 2018-05-26
 tags:
