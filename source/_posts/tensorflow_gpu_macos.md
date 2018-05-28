@@ -111,7 +111,7 @@ $ sed -i -e "s/ __align__(sizeof(T))//g" tensorflow/core/kernels/concat_lib_gpu_
 $ sed -i -e "s/ __align__(sizeof(T))//g" tensorflow/core/kernels/depthwise_conv_op_gpu.cu.cc
 $ sed -i -e "s/ __align__(sizeof(T))//g" tensorflow/core/kernels/split_lib_gpu.cu.cc
 ```
-### 添加依赖头文件nccl.h
+### 添加依赖头文件nccl.h(如编译1.7不用做此步骤)
 [nccl.h下载](https://github.com/NVIDIA/nccl/blob/master/src/nccl.h) 放在 `third_party/nccl` 文件夹内
 
 ### 修改`tensorflow/workspace.bzl`文件
@@ -131,13 +131,14 @@ $ sed -i -e "s/ __align__(sizeof(T))//g" tensorflow/core/kernels/split_lib_gpu.c
   tf_http_archive(
       name = "protobuf_archive",
       urls = [
+          "https://mirror.bazel.build/github.com/dtrebbien/protobuf/archive/50f552646ba1de79e07562b41f3999fe036b4fd0.tar.gz",
           "https://github.com/dtrebbien/protobuf/archive/50f552646ba1de79e07562b41f3999fe036b4fd0.tar.gz",
       ],
       sha256 = "eb16b33431b91fe8cee479575cee8de202f3626aaf00d9bf1783c6e62b4ffbc7",
       strip_prefix = "protobuf-50f552646ba1de79e07562b41f3999fe036b4fd0",
   )
 ```
-### 修复`third_party/gpus/cuda/BUILD.tpl`文件-lgomp报错
+### 修复`third_party/gpus/cuda/BUILD.tpl`文件`-lgomp`报错
 ```
 linkopts = ["-lgomp"],
 ```
