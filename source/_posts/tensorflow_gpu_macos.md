@@ -43,6 +43,12 @@ $ pip install six numpy wheel
 [bazel发布页](https://github.com/bazelbuild/bazel/releases)
 需要注意，这里必须是 0.10 版本，新或旧都能导致编译失败。
 
+二进制文件安装方法
+```bash
+$ chmod +x bazel-<version>-installer-darwin-x86_64.sh
+$ ./bazel-<version>-installer-darwin-x86_64.sh 
+```
+
 ## 降级 Xcode 到 8.2
 不必在最开始就降级，这一步可以放到准备环节最后
 
