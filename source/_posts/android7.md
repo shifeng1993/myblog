@@ -176,7 +176,16 @@ public class MainActivity extends AppCompatActivity {
 ```
 
 # 本地广播
-
+## 定义广播接收器
+```java
+public class LocalReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context,"hello local", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+## 添加动态注册和触发事件
 ```java
 public class MainActivity extends AppCompatActivity {
     private IntentFilter intentFilter;
@@ -210,11 +219,4 @@ public class MainActivity extends AppCompatActivity {
 
 }
 ```
-```java
-public class LocalReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"hello local", Toast.LENGTH_SHORT).show();
-    }
-}
-```
+
