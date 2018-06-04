@@ -1,7 +1,7 @@
 ---
 title: 【js】杨辉三角js实现
 categories: JS
-date: 2017-08-06
+date: 2018-06-04
 tags:
   - JS
   - 杨辉三角
