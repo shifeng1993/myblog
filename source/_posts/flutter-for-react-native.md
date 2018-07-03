@@ -1,5 +1,5 @@
 ---
-title: 【flutter】用于React Native开发者的flutter参考
+title: 【flutter】用于React Native开发者的flutter参考文档
 categories: flutter
 date: 2018-07-02
 tags:
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-在flutter，您可以使用创建一个相同的"Hello world!"的应用程序`Center`和`Text`小工具从核心部件库。该`Center`widget成为widget树的根，并且有一个`Text`子部件。
+在flutter，您可以使用创建一个相同的"Hello world!"的应用程序`Center`和`Text`小工具从核心部件库。该`Center`widget成为widget树的根，并且有一个`Text`widget。
 ```dart
 // Flutter
 import 'package:flutter/material.dart';
@@ -297,7 +297,10 @@ void main() {
 ```
 
 以下图片显示了基本Flutter"Hello world!"应用程序的Android和iOS UI。
-<img src="./pic1.png" height="300" title="android和ios对比"/>
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic1.png" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic2.png" width="350" title="iOS"/></div>
+</div>
 
 现在您已经看到了最基本的Flutter应用程序，下一节将介绍如何利用Flutter丰富的widget库来创建一个现代的，优雅的应用程序。
 
@@ -336,27 +339,355 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-<img src="./pic2.png" height="300" title="android和ios对比"/>
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic3.png" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic4.png" width="350" title="iOS"/></div>
+</div>
+
+在编写应用程序时，您将使用两种类型的weiget：[StatelessWidget](https://docs.flutter.io/flutter/widgets/StatelessWidget-class.html)或 [StatefulWidget](https://docs.flutter.io/flutter/widgets/StatefulWidget-class.html)。StatelessWidget听起来就像是一个没有状态的widget。一个StatelessWidget被创建一次，永远不会改变它的外观。StatefulWidget根据收到的数据或用户输入动态改变状态。
+
+无状态和有状态weiget之间的重要区别在于，有状态weiget具有一个状态对象，用于存储状态数据并跨树重建执行，因此不会丢失。
+
+在简单或基本应用程序中，嵌套widget很容易，但随着代码库变得越来越大，应用程序变得越来越复杂，您应该将嵌套widget深入分解为返回widget或更小类的函数。创建单独的函数和widget允许您在应用程序内重用这些组件。
 
 ## 如何创建可重用组件？
+在React Native中，您可以定义一个类来创建可重用组件，然后使用`props`方法来设置或返回所选元素的属性和值。在下面的例子中，`CustomCard`该类是定义的，然后在父类中使用。
+```javascript
+// React Native
+class CustomCard extends React.Component {
+  render() {
+    return (
+      <View>
+        <Text > Card {this.props.index} </Text>
+        <Button
+          title="Press"
+          onPress={() => this.props.onPress(this.props.index)}
+        />
+      </View>
+    );
+  }
+}
+
+// Usage
+<CustomCard onPress={this.onPress} index={item.key} />
+```
+
+在Flutter中，定义一个类来创建自定义窗口weiget，然后重用窗口weiget。您还可以定义和调用返回可重用weiget的`build`函数，如以下示例中的函数中所示。
+```dart
+// Flutter
+class CustomCard extends StatelessWidget {
+  CustomCard({@required this.index, @required this.onPress});
+
+  final index;
+  final Function onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          Text('Card $index'),
+          FlatButton(
+            child: const Text('Press'),
+            onPressed: this.onPress,
+          ),
+        ],
+      )
+    );
+  }
+}
+...
+// Usage
+CustomCard(
+  index: index,
+  onPress: () { 
+    print('Card $index');
+  },
+)
+...
+```
+在前面的例子中，`CustomCard`该类的构造函数使用Dart的大括号语法来表示命名的可选参数。`{}`
+
+要求这些字段，请从构造函数中删除花括号，或者添加`@required`到构造函数中。
+
+以下屏幕截图显示了可重用的`CustomCard`类的示例。
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic5.png" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic6.png" width="350" title="iOS"/></div>
+</div>
 
 # 项目结构和资源目录
 ## 我从哪里开始编写代码？
+从`main.dart`文件开始。它是在您创建Flutter应用程序时自动生成的。
+```dart
+// Dart
+void main(){
+ print("Hello, this is the main function.");
+}
+```
+在Flutter中，入口点文件是`<projectname>/lib/main.dart`从`main`函数开始执行。
+
 ## 如何在Flutter应用程序中构建文件？
+当您创建一个新的Flutter项目时，它会构建以下目录结构。您可以稍后自定义，但这是您开始的地方。
+```
+┬
+└ projectname
+  ┬
+  ├ android      - android源码。
+  ├ build        - 存储iOS和Android的build文件。
+  ├ ios          - iOS源码。
+  ├ lib          - 外部可访问的Dart源文件。
+    ┬
+    └ src        - 额外的源文件。
+    └ main.dart  - Flutter入口点和新应用程序的开始。
+  ├ test         - 自动化测试文件。
+  └ pubspec.yaml - Flutter应用程序的元数据。
+                   这相当于React Native中的package.json文件。
+```
+
 ## 我在哪里放置我的资源和资产以及如何使用它们？
+Flutter资源或资产是与您的应用程序捆绑并部署的文件，可在运行时访问。扑动应用程序可以包含以下资产类型：
+
+- 静态数据，如JSON文件
+- 配置文件
+- 图标和图像（JPEG，PNG，GIF，动画GIF，WebP，动画WebP，BMP和WBMP）
+
+Flutter使用`pubspec.yaml`位于项目根目录的文件来识别应用程序所需的资产。
+```
+flutter:
+  assets:
+    - assets/my_icon.png
+    - assets/background.png
+```
+
+该assets 节点指定应包含在应用程序中的文件。每个资产都由相对于`pubspec.yaml` 资产文件所在文件的显式路径标识。声明资产的顺序无关紧要。使用的实际目录（assets 在本例中）无关紧要。但是，虽然资产可以放在任何app目录中，但最好将它们放在assets目录中。
+
+在构建期间，Flutter将资产放入称为资产包的特殊存档中，应用程序在运行时读取这些存档。在资产部分中指定资产的路径时pubspec.yaml，构建过程会查找相邻子目录中具有相同名称的任何文件。这些文件也与指定的资产一起包含在资产包中。flutter使用资产变型时，为您的应用程序选择合适分辨率的图像。
+
+在React Native中，您可以通过将图像文件放在源代码目录中并引用它来添加静态图像。
+```javascript
+<Image source={require("./my-icon.png")} />
+```
+在Flutter中，使用AssetImage窗口weiget构建方法中的类向应用程序添加静态图像。
+```dart
+image: AssetImage('assets/background.png'),
+```
+
+有关更多信息，请参阅[在Flutter中添加资产和图像](https://flutter.io/assets-and-images/)。
+
 ## 如何通过网络加载图像？
+在React Native中，您可以在`Image`组件使用props属性`source`的`uri`方式进行指定，并在Image需要时提供大小。
+
+在Flutter中，使用`Image.network`构造函数来包含URL中的图像。
+```dart
+// Flutter
+body: Image.network('https://flutter.io/images/owl.jpg'),
+```
+
 ## 我如何安装软件包和软件包插件？
+Flutter支持使用由其他开发者贡献给Flutter和Dart生态系统的公用package。这使您可以快速构建应用程序，而无需从头开始开发所有内容。包含平台特定代码的软件包称为package plugins。
+
+在React Native中，您可以使用`yarn add {package-name}`或`npm install {package-name} --save`从命令行安装package。
+
+在Flutter中，使用以下说明安装包装：
+
+1.将软件包名称和版本添加到`pubspec.yaml`依赖项部分。下面的例子展示了如何将·`google_sign_inDart`包添加到`pubspec.yaml`文件中。在YAML文件中工作时检查缩进，因为缩进空格很重要！
+```
+dependencies:
+  flutter:
+ sdk: flutter
+  google_sign_in: ^3.0.3
+```
+
+2.通过使用命令行来安装软件包`flutter packages get`。如果使用IDE，它通常会自动运行`flutter packages get`，或者它可能会提示您这样做。
+
+3.将软件包导入您的应用程序代码，如下所示：
+```dart
+import 'package:flutter/cupertino.dart';
+```
+
+有关更多信息，请参阅[使用包](https://flutter.io/using-packages/)和[开发包和插件](https://flutter.io/developing-packages/)。
+
+您可以在[pub.dartlang.org的Flutter Packages部分](https://pub.dartlang.org/flutter/)找到Flutter开发人员共享的许多packages。
 
 # Flutter widget
+在Flutter中，您可以使用widget构建您的用户界面，这些widget根据当前的配置和状态描述他们的视图应该是什么样子。
+
+widget通常由许多嵌套的小型单一用途widget组成，以产生强大的效果。例如，`Container`widget由几个widget组成，负责布局，绘制，定位和大小调整。具体地，`Container`widget包括`LimitedBox`，`ConstrainedBox`，`Align`，`Padding`，`DecoratedBox`，和`Transform` widgets。Container您可以用新的和独特的方式组合这些和其他简单的widget，而不是创建自定义效果的子类。
+
+该`Center`部件是如何控制布局的另一个例子。要将widget居中，将其包装在`Center`widget中，然后使用布局widget进行对齐，行，列和网格。这些布局widget没有自己的可视化表示。相反，他们唯一的目的是控制另一个widget布局的某些方面。要了解widget以某种方式呈现的原因，检查相邻窗口widget通常很有帮助。
+
+有关更多信息，请参阅[Flutter技术概述](https://flutter.io/technical-overview/)。
+
+有关Widgets包中的核心weiget的更多信息，请参阅[Flutter Basic Widgets](https://flutter.io/widgets/basics/)，[Flutter Widget 目录](https://flutter.io/widgets/)或 [Flutter Widget 索引](https://flutter.io/widgets/widgetindex/)。
 
 # Views
 ## 什么相当于`View`容器？
-## 什么相当于FlatList或SectionList？
-## 我如何使用Canvas尽情绘画？
+在React Native中，`View`是一个支持布局的容器`Flexbox`，样式，触摸处理和可访问性控件。
 
-# Layouts
+在Flutter中，您可以使用Widgets库中的核心布局weiget，例如 [Container](https://docs.flutter.io/flutter/widgets/Container-class.html)，[Column](https://docs.flutter.io/flutter/widgets/Column-class.html)，[Row](https://docs.flutter.io/flutter/widgets/Row-class.html)和 [Center](https://docs.flutter.io/flutter/widgets/Center-class.html)。
+
+有关更多信息，请参阅[Layout Widgets](https://flutter.io/widgets/layout/)目录。
+
+## 什么相当于`FlatList`或`SectionList`？
+`List`是垂直排列的可滚动组件列表。
+
+在React Native中，`FlatList`或`SectionList`用于呈现简单或分段的列表。
+```javascript
+// React Native
+<FlatList
+  data={[ ... ]}
+  renderItem={({ item }) => <Text>{item.key}</Text>}
+/>
+```
+[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)是Flutter最常用的滚动weiget。默认的构造函数需要一个明确的子列表。[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)对于少数weiget是最合适的。对于一个大的或无限的列表，使用`ListView.builder`，它根据需要构建它的子项，并只构建那些可见的子项。
+```dart
+// Flutter
+var data = [ ... ];
+ListView.builder(
+  itemCount: data.length,
+  itemBuilder: (context, int index) {
+    return Text(
+      data[index],
+    );
+  },
+)
+```
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic7.gif" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic8.gif" width="350" title="iOS"/></div>
+</div>
+要了解如何实现无限滚动列表，请参阅 [编写您的第一个flutter应用程序，第1部分](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/#0) codelab。
+
+## 我如何使用Canvas绘制？
+在React Native中，画布组件不存在，所以`react-native-canvas`使用第三方库。
+```javascript
+// React Native
+handleCanvas = canvas => {
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "skyblue";
+  ctx.beginPath();
+  ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+  ctx.fillRect(150, 100, 300, 300);
+  ctx.stroke();
+};
+
+render() {
+  return (
+    <View>
+      <Canvas ref={this.handleCanvas} />
+    </View>
+  );
+}
+```
+在Flutter中，您可以使用CustomPaint 和CustomPainter类绘制到画布。
+
+以下示例显示了如何在绘制阶段使用`CustomPaint`weiget进行绘制。它实现了抽象类CustomPainter，并将其传递给CustomPaint的画家属性。CustomPaint子类必须实现`paint`和`shouldRepaint`方法。
+```dart
+// Flutter
+class MyCanvasPainter extends CustomPainter {
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint();
+    paint.color = Colors.amber;
+    canvas.drawCircle(Offset(100.0, 200.0), 40.0, paint);
+    Paint paintRect = Paint();
+    paintRect.color = Colors.lightBlue;
+    Rect rect = Rect.fromPoints(Offset(150.0, 300.0), Offset(300.0, 400.0));
+    canvas.drawRect(rect, paintRect);
+  }
+
+  bool shouldRepaint(MyCanvasPainter oldDelegate) => false;
+  bool shouldRebuildSemantics(MyCanvasPainter oldDelegate) => false;
+}
+class _MyCanvasState extends State<MyCanvas> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomPaint(
+        painter: MyCanvasPainter(),
+      ),
+    );
+  }
+}
+```
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic9.png" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic10.png" width="350" title="iOS"/></div>
+</div>
+
+# Layouts(布局)
 ## 如何使用widget来定义布局属性？
-## 如何分层widget？
+在React Native中，大部分布局可以通过传递给特定组件的道具完成。例如，您可以使用`View`组件的props属性`style`来指定flexbox属性。要在列中排列组件，您需要指定一个属性，如：`flexDirection:'column'`。
+
+在Flutter中，布局主要由widget定义，widget专门用于提供布局，并结合控件和其样式属性。
+
+例如，[`Column`](https://docs.flutter.io/flutter/widgets/Column-class.html) 和 [`Row`](https://docs.flutter.io/flutter/widgets/Row-class.html) 将获取一组子对象，并分别垂直和水平对齐。[`Container`](https://docs.flutter.io/flutter/widgets/Container-class.html) 采用布局和样式属性的组合，而[`Center`](https://docs.flutter.io/flutter/widgets/Center-class.html)控件将其子控件居中。
+```dart
+// Flutter
+Center(
+  child: Column(
+    children: <Widget>[
+      Container(
+        color: Colors.red,
+        width: 100.0,
+        height: 100.0,
+      ),
+      Container(
+        color: Colors.blue,
+        width: 100.0,
+        height: 100.0,
+      ),
+      Container(
+        color: Colors.green,
+        width: 100.0,
+        height: 100.0,
+      ),
+    ],
+  ),
+)
+```
+Flutter在其核心部件库中提供了各种布局部件。例如，[`Padding`](https://docs.flutter.io/flutter/widgets/Padding-class.html)和[`Align`](https://docs.flutter.io/flutter/widgets/Align-class.html)，和[`Stack`](https://docs.flutter.io/flutter/widgets/Stack-class.html)。
+
+有关完整列表，请参阅[Layout Widgets](https://flutter.io/widgets/layout/)。
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic11.gif" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic12.gif" width="350" title="iOS"/></div>
+</div>
+
+## 如何布局widget？
+在React Native中，组件可以使用absolute定位进行布局。
+
+Flutter使用[Stack](https://docs.flutter.io/flutter/widgets/Stack-class.html)widget在图层中排列子widget。widget可以完全或部分重叠基本widget。
+
+该`Stack`widget的子widget相对于它的框的边缘进行定位。如果你只是想重叠几个子部件，这个类很有用。
+```dart
+// Flutter
+Stack(
+  alignment: const Alignment(0.6, 0.6),
+  children: <Widget>[
+    CircleAvatar(
+      backgroundImage: NetworkImage(
+        "https://avatars3.githubusercontent.com/u/14101776?v=4"),
+    ),
+    Container(
+      decoration: BoxDecoration(
+          color: Colors.black45,
+      ),
+      child: Text('Flutter'),
+    ),
+  ],
+)
+```
+前面的示例用于`Stack`在`Container`上覆盖`Container`（`Text` 在半透明的黑色背景上显示它）`CircleAvatar`。`Stack`使用对齐属性和对齐坐标偏移文本。
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic13.png" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic14.png" width="350" title="iOS"/></div>
+</div>
+
+有关更多信息，请参阅[Stack](https://docs.flutter.io/flutter/widgets/Stack-class.html)类文档。
 
 # Styling
 ## 如何设置组件的样式？
