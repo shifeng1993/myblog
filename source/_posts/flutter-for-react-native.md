@@ -1,7 +1,7 @@
 ---
 title: 【flutter】用于React Native开发者的flutter参考文档
 categories: flutter
-date: 2018-07-02
+date: 2018-07-04
 tags:
   - flutter
 ---
@@ -307,7 +307,7 @@ void main() {
 ## 如何使用widget并将其嵌套成widget树？
 在Flutter中，几乎所有东西都是一个widget。
 
-widget是应用程序用户界面的基本构建块。您将窗口widget组成一个层次结构，称为窗口widget树。每个widget嵌套在父窗口widget中，并从其父窗口继承属性。即使应用程序对象本身也是一个widget。没有单独的“应用程序”对象。相反，根部件扮演着这个角色。
+widget是应用程序用户界面的基本构建块。您将widget组成一个层次结构，称为widget树。每个widget嵌套在父widget中，并从其父窗口继承属性。即使应用程序对象本身也是一个widget。没有单独的“应用程序”对象。相反，根部件扮演着这个角色。
 
 一个widget可以定义：
 
@@ -344,9 +344,9 @@ class MyApp extends StatelessWidget {
 <div style="display:table-cell"><img src="./pic4.png" width="350" title="iOS"/></div>
 </div>
 
-在编写应用程序时，您将使用两种类型的weiget：[StatelessWidget](https://docs.flutter.io/flutter/widgets/StatelessWidget-class.html)或 [StatefulWidget](https://docs.flutter.io/flutter/widgets/StatefulWidget-class.html)。StatelessWidget听起来就像是一个没有状态的widget。一个StatelessWidget被创建一次，永远不会改变它的外观。StatefulWidget根据收到的数据或用户输入动态改变状态。
+在编写应用程序时，您将使用两种类型的widget：[StatelessWidget](https://docs.flutter.io/flutter/widgets/StatelessWidget-class.html)或 [StatefulWidget](https://docs.flutter.io/flutter/widgets/StatefulWidget-class.html)。StatelessWidget听起来就像是一个没有状态的widget。一个StatelessWidget被创建一次，永远不会改变它的外观。StatefulWidget根据收到的数据或用户输入动态改变状态。
 
-无状态和有状态weiget之间的重要区别在于，有状态weiget具有一个状态对象，用于存储状态数据并跨树重建执行，因此不会丢失。
+无状态和有状态widget之间的重要区别在于，有状态widget具有一个状态对象，用于存储状态数据并跨树重建执行，因此不会丢失。
 
 在简单或基本应用程序中，嵌套widget很容易，但随着代码库变得越来越大，应用程序变得越来越复杂，您应该将嵌套widget深入分解为返回widget或更小类的函数。创建单独的函数和widget允许您在应用程序内重用这些组件。
 
@@ -372,7 +372,7 @@ class CustomCard extends React.Component {
 <CustomCard onPress={this.onPress} index={item.key} />
 ```
 
-在Flutter中，定义一个类来创建自定义窗口weiget，然后重用窗口weiget。您还可以定义和调用返回可重用weiget的`build`函数，如以下示例中的函数中所示。
+在Flutter中，定义一个类来创建自定义widget，然后重用widget。您还可以定义和调用返回可重用widget的`build`函数，如以下示例中的函数中所示。
 ```dart
 // Flutter
 class CustomCard extends StatelessWidget {
@@ -468,7 +468,7 @@ flutter:
 ```javascript
 <Image source={require("./my-icon.png")} />
 ```
-在Flutter中，使用AssetImage窗口weiget构建方法中的类向应用程序添加静态图像。
+在Flutter中，使用AssetImagewidget构建方法中的类向应用程序添加静态图像。
 ```dart
 image: AssetImage('assets/background.png'),
 ```
@@ -515,17 +515,17 @@ import 'package:flutter/cupertino.dart';
 
 widget通常由许多嵌套的小型单一用途widget组成，以产生强大的效果。例如，`Container`widget由几个widget组成，负责布局，绘制，定位和大小调整。具体地，`Container`widget包括`LimitedBox`，`ConstrainedBox`，`Align`，`Padding`，`DecoratedBox`，和`Transform` widgets。Container您可以用新的和独特的方式组合这些和其他简单的widget，而不是创建自定义效果的子类。
 
-该`Center`部件是如何控制布局的另一个例子。要将widget居中，将其包装在`Center`widget中，然后使用布局widget进行对齐，行，列和网格。这些布局widget没有自己的可视化表示。相反，他们唯一的目的是控制另一个widget布局的某些方面。要了解widget以某种方式呈现的原因，检查相邻窗口widget通常很有帮助。
+该`Center`部件是如何控制布局的另一个例子。要将widget居中，将其包装在`Center`widget中，然后使用布局widget进行对齐，行，列和网格。这些布局widget没有自己的可视化表示。相反，他们唯一的目的是控制另一个widget布局的某些方面。要了解widget以某种方式呈现的原因，检查相邻widget通常很有帮助。
 
 有关更多信息，请参阅[Flutter技术概述](https://flutter.io/technical-overview/)。
 
-有关Widgets包中的核心weiget的更多信息，请参阅[Flutter Basic Widgets](https://flutter.io/widgets/basics/)，[Flutter Widget 目录](https://flutter.io/widgets/)或 [Flutter Widget 索引](https://flutter.io/widgets/widgetindex/)。
+有关Widgets包中的核心widget的更多信息，请参阅[Flutter Basic Widgets](https://flutter.io/widgets/basics/)，[Flutter Widget 目录](https://flutter.io/widgets/)或 [Flutter Widget 索引](https://flutter.io/widgets/widgetindex/)。
 
 # Views
 ## 什么相当于`View`容器？
 在React Native中，`View`是一个支持布局的容器`Flexbox`，样式，触摸处理和可访问性控件。
 
-在Flutter中，您可以使用Widgets库中的核心布局weiget，例如 [Container](https://docs.flutter.io/flutter/widgets/Container-class.html)，[Column](https://docs.flutter.io/flutter/widgets/Column-class.html)，[Row](https://docs.flutter.io/flutter/widgets/Row-class.html)和 [Center](https://docs.flutter.io/flutter/widgets/Center-class.html)。
+在Flutter中，您可以使用Widgets库中的核心布局widget，例如 [Container](https://docs.flutter.io/flutter/widgets/Container-class.html)，[Column](https://docs.flutter.io/flutter/widgets/Column-class.html)，[Row](https://docs.flutter.io/flutter/widgets/Row-class.html)和 [Center](https://docs.flutter.io/flutter/widgets/Center-class.html)。
 
 有关更多信息，请参阅[Layout Widgets](https://flutter.io/widgets/layout/)目录。
 
@@ -540,7 +540,7 @@ widget通常由许多嵌套的小型单一用途widget组成，以产生强大�
   renderItem={({ item }) => <Text>{item.key}</Text>}
 />
 ```
-[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)是Flutter最常用的滚动weiget。默认的构造函数需要一个明确的子列表。[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)对于少数weiget是最合适的。对于一个大的或无限的列表，使用`ListView.builder`，它根据需要构建它的子项，并只构建那些可见的子项。
+[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)是Flutter最常用的滚动widget。默认的构造函数需要一个明确的子列表。[ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)对于少数widget是最合适的。对于一个大的或无限的列表，使用`ListView.builder`，它根据需要构建它的子项，并只构建那些可见的子项。
 ```dart
 // Flutter
 var data = [ ... ];
@@ -582,7 +582,7 @@ render() {
 ```
 在Flutter中，您可以使用CustomPaint 和CustomPainter类绘制到画布。
 
-以下示例显示了如何在绘制阶段使用`CustomPaint`weiget进行绘制。它实现了抽象类CustomPainter，并将其传递给CustomPaint的画家属性。CustomPaint子类必须实现`paint`和`shouldRepaint`方法。
+以下示例显示了如何在绘制阶段使用`CustomPaint`widget进行绘制。它实现了抽象类CustomPainter，并将其传递给CustomPaint的画家属性。CustomPaint子类必须实现`paint`和`shouldRepaint`方法。
 ```dart
 // Flutter
 class MyCanvasPainter extends CustomPainter {
@@ -853,7 +853,7 @@ class MyStatelessWidget extends StatelessWidget {
 
 state是在构建widget时可以同步读取的信息，在widget的生命周期内可能会发生更改。widget实现者有责任确保状态变化时立即通知状态。当widget可以动态更改时，使用`StatefulWidget`。例如，通过在表单中键入或移动滑块来更改widget的状态。或者，它可以随着时间的推移而改变-也许是一个数据提要更新了UI。
 
-[Checkbox](https://docs.flutter.io/flutter/material/Checkbox-class.html)，[Radio](https://docs.flutter.io/flutter/material/Radio-class.html)，[Slider](https://docs.flutter.io/flutter/material/Slider-class.html)，[InkWell](https://docs.flutter.io/flutter/material/InkWell-class.html)，[Form](https://docs.flutter.io/flutter/widgets/Form-class.html)和[TextField](https://docs.flutter.io/flutter/material/TextField-class.html)是有状态窗口widget的示例，它们是[StatefulWidget](https://docs.flutter.io/flutter/widgets/StatefulWidget-class.html)的子类。
+[Checkbox](https://docs.flutter.io/flutter/material/Checkbox-class.html)，[Radio](https://docs.flutter.io/flutter/material/Radio-class.html)，[Slider](https://docs.flutter.io/flutter/material/Slider-class.html)，[InkWell](https://docs.flutter.io/flutter/material/InkWell-class.html)，[Form](https://docs.flutter.io/flutter/widgets/Form-class.html)和[TextField](https://docs.flutter.io/flutter/material/TextField-class.html)是有状态widget的示例，它们是[StatefulWidget](https://docs.flutter.io/flutter/widgets/StatefulWidget-class.html)的子类。
 
 下面的示例声明一个StatefulWidget，它需要`createState()`方法。此方法创建用于管理widget状态的状态对象`_MyStatefulWidgetState`。
 ```dart
@@ -921,11 +921,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 ```
 ## 什么是StatefulWidget和StatelessWidget最佳实践？
-在设计窗口widget时，需要考虑以下几点。
+在设计widget时，需要考虑以下几点。
 ### 1.确定一个widget应该是一个StatefulWidget还是一个StatelessWidget
 在Flutter中，widget是有状态的还是无状态的 - 取决于它们是否依赖于状态变化。
 
-- 如果窗口widget发生更改 - 用户与其进行交互或数据源中断UI，则它是有状态的。
+- 如果widget发生更改 - 用户与其进行交互或数据源中断UI，则它是有状态的。
 - 如果一个widget是只读的或不可变的，那么它就是无状态。
 
 ### 2.确定哪个对象管理widget的状态（对于StatefulWidget）
@@ -961,7 +961,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 ```
 ### 4.将StatefulWidget添加到widget树中
-`StatefulWidget`在app的构建方法中将自定义添加到窗口widget树。
+`StatefulWidget`在app的构建方法中将自定义添加到widget树。
 在应用程序`build`方法中的widget树中添加自定义`StatefulWidget`。
 ```dart
 class MyStatelessWidget extends StatelessWidget {
@@ -1463,10 +1463,10 @@ RaisedButton(
  ),
 )
 ```
-在此示例中，当用户单击`Submit`按钮时，dialog将显示在`TextField`中输入的文本。这是使用alertDialog显示警报消息的小部件实现的 ，而[TextEditingController](https://docs.flutter.io/flutter/widgets/TextEditingController-class.html)的`text`属性访问了`TextField`输入的文本。
+在此示例中，当用户单击`Submit`按钮时，dialog将显示在`TextField`中输入的文本。这是使用alertDialog显示警报消息的widget实现的 ，而[TextEditingController](https://docs.flutter.io/flutter/widgets/TextEditingController-class.html)的`text`属性访问了`TextField`输入的文本。
 
 ## 如何使用表单widget？
-在Fltter中，使用[`Form`](https://docs.flutter.io/flutter/widgets/Form-class.html)小部件，其中[`TextFormField`](https://docs.flutter.io/flutter/material/TextFormField-class.html)小部件和Submit按钮作为子元素传递。`TextFormField`小部件有一个名为`onSaved`[onSaved](https://docs.flutter.io/flutter/widgets/FormField/onSaved.html)的参数，它接受回调并在保存表单时执行。`FormState`对象用于保存、重置或验证每个`FormField`，这些`FormField`是此`Form`的后代。要获得`FormState`，可以使用`Form.of`和以表单为祖先的上下文，或者将`GlobalKey`传递给表单构造函数并调用`GlobalKey.currentState`。
+在Fltter中，使用[`Form`](https://docs.flutter.io/flutter/widgets/Form-class.html)widget，其中[`TextFormField`](https://docs.flutter.io/flutter/material/TextFormField-class.html)widget和Submit按钮作为子元素传递。`TextFormField`widget有一个名为`onSaved`[onSaved](https://docs.flutter.io/flutter/widgets/FormField/onSaved.html)的参数，它接受回调并在保存表单时执行。`FormState`对象用于保存、重置或验证每个`FormField`，这些`FormField`是此`Form`的后代。要获得`FormState`，可以使用`Form.of`和以表单为祖先的上下文，或者将`GlobalKey`传递给表单构造函数并调用`GlobalKey.currentState`。
 ```dart
 final formKey = GlobalKey<FormState>();
 
@@ -1515,14 +1515,227 @@ void _submit() {
 </div>
 
 # 判断平台特定的代码
+在构建跨平台应用程序时，您希望跨平台重用尽可能多的代码。但是，可能会出现这样的情况：根据操作系统的不同，代码是不同意义的。这需要通过声明特定平台来单独实现。
 
+在React Native中，将使用以下实现：
+```javascript
+// React Native
+if (Platform.OS === "ios") {
+  return "iOS";
+} else if (Platform.OS === "android") {
+  return "android";
+} else {
+  return "not recognised";
+}
+```
+
+在Flutter中，使用以下实现：
+```dart
+// Flutter
+if (Theme.of(context).platform == TargetPlatform.iOS) {
+  return "iOS";
+} else if (Theme.of(context).platform == TargetPlatform.android) {
+  return "android";
+} else if (Theme.of(context).platform == TargetPlatform.fuchsia) {
+  return "fuchsia";
+} else {
+  return "not recognised ";
+}
+```
 # 调试
+在运行您的应用程序之前，请使用`flutter analyze`。Flutter分析器（它是`dartanalyzer`工具的封装）检查你的代码并帮助识别可能出现的问题。如果您正在使用支持Flutter的IDE，则会自动执行此操作。
+
 ## 如何访问应用内开发人员菜单？
+在React Native中，可以通过摇动设备来访问开发人员菜单：`⌘D`用于iOS模拟器，`⌘M`用于Android模拟器。
+
+在Flutter中，如果您使用的是IDE，则可以使用IDE工具。如果您使用启动应用程序，`flutter run`也可以通过`h`在终端窗口中键入来访问菜单，或键入以下快捷方式：
+
+| Action | 终端快捷键 | debug函数和属性 |
+| ----- | -----| ----- |
+| Widget hierarchy of the app | w | debugDumpApp() |
+| Rendering tree of the app | t | debugDumpRenderTree() |
+| Layers | L | debugDumpLayerTree() |
+| Accessibility | S (traversal order) or U (inverse hit test order) | debugDumpSemantics() |
+| To toggle the widget inspector | i | WidgetsApp. showWidgetInspectorOverride |
+| To toggle the display of construction lines	 | p | debugPaintSizeEnabled |
+| To simulate different operating systems | o | defaultTargetPlatform |
+| To display the performance overlay | P | WidgetsApp. showPerformanceOverlay |
+| To save a screenshot to flutter. png | s |  |
+| To quit | q |  |
+
 ## 如何执行热重载？
+Flutter的热重载功能可帮助您快速轻松地进行实践，构建用户界面，添加功能和修复错误。您不必每次重新编译应用程序，程序会自动进行热重载，以更新应用反映您的更改，并保留应用程序的当前状态。
+
+在React Native中，快捷键是iOS模拟器的`⌘R`，并在Android模拟器上双击`R`
+
+在Flutter中，如果您使用的是IntelliJ IDE或Android Studio，则可以选择全部保存（`⌘ + s`/ `ctrl + s`），也可以单击工具栏上的热重新加载按钮。如果使用命令行运行应用程序flutter run，请在"终端"窗口中键入`r`。您也可以通过`R`在终端窗口中输入完成重启。
+
 ## 我可以用什么工具在Flutter中调试我的应用程序？
+当您需要调试Flutter应用程序时，可以使用多个选项和工具。
+
+除了Flutter分析仪之外，该工具还可用于分析和调试您的Dart应用程序。如果您flutter run在终端中使用了您的应用程序 ，则可以打开打印到终端窗口的天文台URL的网页，例如：  http://127.0.0.1:8100/。
+
+除了`flutter analyze`之外，[Dart Observatory](https://dart-lang.github.io/observatory/)也是一个用来分析和调试Dart应用程序的工具。如果您在终端中使用`flutter run`启动应用程序，则可以在输出到终端窗口的看到对应的 `Observatory` 的URL，例如：`http://127.0.0.1:8100/`。
+
+Observatory支持分析，检查堆，观察已执行的代码行，调试内存泄漏和内存碎片。欲了解更多信息，请参阅[Observatory文件](https://dart-lang.github.io/observatory/)。当您下载并安装Dart SDK时，Observatory将免费提供。
+
+如果您使用的是IDE，则可以使用IDE调试器调试应用程序。
+
+如果您使用的是IntelliJ和Android Studio，则可以使用Flutter Inspector。Flutter Inspector使您更容易理解应用程序的呈现方式。它允许你：
+
+- 将应用程序的UI结构视为widget树
+- 在您的设备或模拟器上选择一个点，然后找到渲染这些像素的相应widget
+- 查看各个widget的属性
+- 快速识别布局问题并确定其原因
+
+可以从"View > Tool Windows > Flutter Inspector"打开"Flutter Inspector"视图。内容仅在应用程序运行时显示。
+
+若要检查特定widget，请在工具栏中选择"Toggle inspect mode"操作，然后在真机或模拟器上单击所需的widget。widget在应用程序的UI中被突出显示。您将在IntelliJ中的widget层次结构中看到widget，以及该widget的各个属性。
+
+有关更多信息，请参阅 [调试flutter应用程序](https://flutter.io/debugging/)。
 
 # 动画
-## 如何添加简单的淡入动画？
-## 如何给卡片添加滑动动画？
+设计良好的动画使UI感觉更直观，有助于完善的应用程序的外观和感受，并改善用户体验。Flutter的动画支持可以轻松实现简单和复杂的动画。Flutter SDK包含许多包含标准运动效果的Material Design Widget，您可以轻松地自定义这些效果来个性化应用程序。
 
-# React Native 和 Flutter Widget 相同作用的组件
+在React Native中，Animated API用于创建动画。
+
+在Flutter中，使用[Animation](https://docs.flutter.io/flutter/animation/Animation-class.html)类和[AnimationController](https://docs.flutter.io/flutter/animation/AnimationController-class.html)类。
+
+`Animation`是一个抽象类，了解其当前值及其状态（completed 或者 dismissed）。`AnimationController`类允许您正向或反向播放动画，或者停止动画，并将动画设置为特定的值以自定义动画。
+
+## 如何添加简单的淡入动画？
+在下面的React Native示例中，`FadeInView`使用`Animated` API创建了一个动画组件。定义初始不透明度状态，结束状态和动画开始的持续时间。动画组件添加到`Animated`组件内部，透明度状态`fadeAnim`映射到我们要设置动画的`Text`组件的透明度，然后调用`start()`启动动画。
+```javascript
+// React Native
+class FadeInView extends React.Component {
+  state = {
+    fadeAnim: new Animated.Value(0) // Initial value for opacity: 0
+  };
+  componentDidMount() {
+    Animated.timing(this.state.fadeAnim, {
+      toValue: 1,
+      duration: 10000
+    }).start();
+  }
+  render() {
+    return (
+      <Animated.View style={{...this.props.style, opacity: this.state.fadeAnim }} >
+        {this.props.children}
+      </Animated.View>
+    );
+  }
+}
+    ...
+<FadeInView>
+  <Text> Fading in </Text>
+</FadeInView>
+    ...
+```
+
+要在Flutter中创建相同的动画，请创建名为`controller`的[`AnimationController`](https://docs.flutter.io/flutter/animation/AnimationController-class.html)对象，并指定持续时间。默认情况下，`AnimationController`在给定的持续时间内线性生成范围从0.0到1.0的值。每当运行应用程序的设备准备显示新的帧时，动画控制器就会生成一个新值。通常情况下，这个速率大约是每秒60帧。
+
+定义一个时，你必须传入一个vsync对象。存在vsync防止屏幕外动画消耗不必要的资源。您可以vsync通过添加 TickerProviderStateMixin到类定义来使用有状态的对象。一个AnimationController 需要TickerProvider，其使用配置vsync在构造参数。
+
+定义`AnimationController`时，必须传入一个`vsync`对象。`vsync`的存在可以防止屏幕外动画消耗不必要的资源。通过将`TickerProviderStateMixin`添加到类定义中，可以将有状态对象用作`vsync`。一个动画控制器需要一个`TickerProvider`，它是使用构造函数上的`vsync`参数配置的。
+
+A Tween描述了开始和结束值之间的插值或从输入范围到输出范围的映射。要通过Tween动画使用对象，请调用Tween对象的animate方法并将其传递给Animation您要修改的 对象。
+
+[Tween](https://docs.flutter.io/flutter/animation/Tween-class.html)描述开始值和结束值之间的插值或从输入范围到输出范围的映射。若要在动画中使用`Tween`对象，请调用该对象的`animate`方法，并将要修改的`Animation`对象传递给该对象。
+
+对于这个示例，使用了一个[`FadeTransition`](https://docs.flutter.io/flutter/widgets/FadeTransition-class.html)widget，并将该`opacity`属性映射到该`animation`对象。
+
+要开始动画，请使用`controller.forward()`。其他操作也可以使用`controller`执行，例如`fling()`或`repeat()`。对于这个示例，该[FlutterLogo](https://docs.flutter.io/flutter/material/FlutterLogo-class.html)widget在`FadeTransition`widget内部使用。
+
+```dart
+
+// Flutter
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(Center(child: LogoFade()));
+}
+
+class LogoFade extends StatefulWidget {
+  _LogoFadeState createState() => _LogoFadeState();
+}
+
+class _LogoFadeState extends State<LogoFade> with TickerProviderStateMixin {
+  Animation animation;
+  AnimationController controller;
+
+  initState() {
+    super.initState();
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+    final CurvedAnimation curve =
+    CurvedAnimation(parent: controller, curve: Curves.easeIn);
+    animation = Tween(begin: 0.0, end: 1.0).animate(curve);
+    controller.forward();
+  }
+
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: animation,
+      child: Container(
+        height: 300.0,
+        width: 300.0,
+        child: FlutterLogo(),
+      ),
+    );
+  }
+
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+}
+```
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic27.gif" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic28.gif" width="350" title="iOS"/></div>
+</div>
+
+## 如何给卡片添加swipe动画？
+在React Native中，swipe动画使用第三方库实现，例如`PanResponder`。
+
+在Flutter中，要添加一个swipe动画，请使用[`Dismissible`](https://docs.flutter.io/flutter/widgets/Dismissible-class.html)widget并嵌套子widget。
+```dart
+child: Dismissible(
+  key: key,
+  onDismissed: (DismissDirection dir) {
+    cards.removeLast();
+  },
+  child: Container(
+    ...
+  ),
+),
+```
+
+<div style="display:table-row;margin:0 auto">
+<div style="display:table-cell"><img src="./pic29.gif" width="350" title="android" /></div>
+<div style="display:table-cell"><img src="./pic30.gif" width="350" title="iOS"/></div>
+</div>
+
+# React Native 和 Flutter Widget 功能相等的组件
+
+| React Native Component | Flutter Widget | 
+| ---------------------- | -------------- |
+| Button                 | [RaisedButton](https://docs.flutter.io/flutter/material/RaisedButton-class.html) |
+| Button                 | [FlatButton](https://docs.flutter.io/flutter/material/FlatButton-class.html) |
+| ScrollView             | [ListView](https://docs.flutter.io/flutter/widgets/ListView-class.html)|
+| FlatList               | [ListView.builder()](https://docs.flutter.io/flutter/widgets/ListView/ListView.builder.html) |
+| Image                  | [Image](https://facebook.github.io/react-native/docs/image.html) |
+| Modal                  | [ModalRoute](https://docs.flutter.io/flutter/widgets/ModalRoute-class.html) |
+| Activity Indicator     | [CircularProgressIndicator](https://docs.flutter.io/flutter/material/CircularProgressIndicator-class.html) |
+| Activity Indicator     | [LinearProgressIndicator](https://docs.flutter.io/flutter/material/LinearProgressIndicator-class.html) |
+| Refresh Control        | [RefreshIndicator](https://docs.flutter.io/flutter/material/RefreshIndicator-class.html) |
+| View                   | [Container](https://docs.flutter.io/flutter/widgets/Container-class.html) |
+| View                   | [Column](https://docs.flutter.io/flutter/widgets/Column-class.html) |
+| View                   | [Row](https://docs.flutter.io/flutter/widgets/Row-class.html) |
+| View                   | [Center](https://docs.flutter.io/flutter/widgets/Center-class.html) |
+| View                   | [Padding](https://docs.flutter.io/flutter/widgets/Padding-class.html) |
+| Touchable Opacity      | [GestureDetector](https://docs.flutter.io/flutter/widgets/GestureDetector-class.html) |
+| Text Input             | [TextField](https://docs.flutter.io/flutter/material/TextField-class.html) |
+| Text                   | [Text](https://docs.flutter.io/flutter/widgets/Text-class.html) |
+| Switch                 | [Switch](https://docs.flutter.io/flutter/material/Switch-class.html) |
+| Slider                 | [Slider](https://docs.flutter.io/flutter/material/Slider-class.html) |
