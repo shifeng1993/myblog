@@ -53,3 +53,33 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   // 使用TickerProvider 记得加 with SingleTickerProviderStateMixin 不然会报错
 }
 ```
+
+#### 使用ios的动画交互 和 MaterialApp 主题颜色配置不生效的问题
+检查是否存在子级MaterialApp。如果有子级MaterialApp请删除，保证全局只有一个MaterialApp，theme就会生效
+
+```dart
+class App extends StatelessWidget {
+  final store = createStore();
+  // App();
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreProvider<AppState>(
+      store: createStore(),
+      child: MaterialApp(
+        theme: ThemeData(
+          platform: TargetPlatform.iOS, // 使用ios的界面动画方式
+          primaryColor: Colors.red, // 应用主要部分的背景颜色（工具栏，标签栏等）
+          accentColor: Colors.red, // 前景色：旋钮，文本，过度滚动边缘效果等
+        ),
+        routes: <String, WidgetBuilder>{
+          '/': (BuildContext context) => HomeScreen(),
+        },
+      ),
+    );
+  }
+}
+```
+
+
+
