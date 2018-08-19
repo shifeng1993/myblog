@@ -206,7 +206,7 @@ public class BottomCropImageView extends ImageView {
 
 下面是效果:
 
-<img src="./pic3.png" style="width:400px;" title="重写ImageView 的 topCrop"/>
+<img src="./pic3.png" style="width:400px;" title="重写ImageView 的 bottomCrop"/>
 
 
 以上，就是启动图宽高被拉伸的解决方案，下周去了可以让美工做个20：9的启动图我们直接放上去。
