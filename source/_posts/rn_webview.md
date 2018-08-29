@@ -17,7 +17,7 @@ https://reactnative.cn/docs/webview/
 
 # webView不能设置宽高
 - 解决方案
-做一个容器, 使用props传下去宽度和高度，分别在webview的父容器，和网页内部，标明宽高
+做一个容器, 使用props传下去宽度和高度，分别在webview的父容器，和网页内部，设置宽高
 
 ```javascript
 <View style={{flexDirection: 'row',width: this.props.width}}>
@@ -254,4 +254,240 @@ class Echarts extends Component {
 </html>
 ```
 
-# 
+# webView android 内嵌html 外联js失效
+因为android的web使用的是okhttp发送请求的，okhttp会默认将不安全的https过滤掉
+- 解决方案
+使用安全的 https:// 的外联，或者就使用内联
+```html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>echarts</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- webView ios适配 start -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no"> 
+    <!-- webView ios适配 end -->
+    ...
+    <script type="text/javascript" src="https://www.echartsjs.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+  </head>
+  
+  <body>
+    <div id="main" ></div>
+  </body>
+</html>
+```
+
+# rn 引入web库报错 没找到 userAgent 是个未定义
+这是因为在rn中没有浏览器的一些信息。当然，在webview内嵌的网页中是没问题的
+- 解决方案
+找到对应判断的代码，将其注释掉
+```javascript
+else {
+    // env = detect(navigator.userAgent);
+    env = {
+        browser: {},
+        os: {},
+        node: true,
+        worker: false,
+        // Assume canvas is supported
+        canvasSupported: true,
+        svgSupported: true
+    };
+}
+```
+
+# rn与内嵌网页 用webView桥接
+- 解决方案
+在 `injectedJavaScript` 内事先添加对 `message` 的监听事件，
+然后使用webView props属性 `onMessage` 和 实例方法 `postMessage` 进行一收一发。
+需要注意的是，收发，都是收发字符串类型的数据，可以使用json字符串
+
+```javascript
+const renderChart = (props) => {
+  const height = `${props.height || 400}px`;
+  const width = props.width ? `${props.width}px` : 'auto';
+  const backgroundColor = props.backgroundColor;
+  return `
+      document.getElementById('main').style.height = "${height}";
+      document.getElementById('main').style.width = "${width}";
+      document.getElementById('main').style.backgroundColor = "${backgroundColor}";
+      var myChart = echarts.init(document.getElementById('main'));
+      myChart.setOption(${JSON.stringify(props.option)});
+      window.document.addEventListener('message', function(e) {
+        var req = JSON.parse(e.data);
+        switch (req.types) {
+          case "SET_OPTION":
+            myChart.setOption(req.payload.option,req.payload.notMerge,req.payload.lazyUpate);
+            break;
+          case "GET_IMAGE":
+            var base64 = myChart.getDataURL();
+            window.postMessage(JSON.stringify({"types":"GET_IMAGE","payload": base64}));
+            break;
+          case "CLEAR":
+            myChart.clear();
+            break;
+          default:
+            break;
+        }
+      });
+      myChart.on('click', function(params) {
+        var seen = [];
+        var paramsString = JSON.stringify(params, function(key, val) {
+          if (val != null && typeof val == "object") {
+            if (seen.indexOf(val) >= 0) {
+              return;
+            }
+            seen.push(val);
+          }
+          return val;
+        });
+        window.postMessage(JSON.stringify({"types":"ON_PRESS","payload": paramsString}));
+      });
+    `
+}
+
+export default renderChart;
+```
+
+
+```javascript
+class Echarts extends Component {
+  ...
+  
+  render() {
+    ...
+    return (
+      <View style={{flexDirection: 'row',width: this.props.width}}>
+        <View style={{flex:1,height: this.props.height || 400}}>
+          <WebView
+            ref="chart"
+            ...
+            onMessage={this._handleMessage}
+            injectedJavaScript={renderChart(this.props)}
+            ...
+          />
+        </View>
+      </View>
+    );
+  }
+
+  _handleMessage = (e) => {
+    if (!e) return null;
+    const data = JSON.parse(e.nativeEvent.data)
+    switch (data.types) {
+      case 'ON_PRESS':
+        this.props.onPress(JSON.parse(data.payload))
+        break;
+      case 'GET_IMAGE':
+        this.setState({data})
+        break;
+      default:
+        break;
+    }
+  };
+
+  _postMessage(data){
+    this.refs.chart.postMessage(JSON.stringify(data));
+  }
+
+  setOption = (option,notMerge, lazyUpdate) => {
+    let data = {
+      types: 'SET_OPTION',
+      payload: {
+        option:option,
+        notMerge:notMerge || false,
+        lazyUpdate:lazyUpdate || false
+      }
+    }
+    this._postMessage(data);
+  }
+  
+  clear=()=>{
+    let data = {
+      types: 'CLEAR'
+    }
+    this._postMessage(data);
+  }
+
+  getImage = (callback) => {
+    let data = {
+      types: 'GET_IMAGE',
+      payload: null
+    }
+    this._postMessage(data);
+    setTimeout(() => {
+      if(this.state.data.types === 'GET_IMAGE') {
+        callback(this.state.data)
+      } else {
+        callback(null)
+      }
+    }, 500);
+  }  
+}
+```
+
+# postMessage 传递对象 JSON.stringify 后函数对象变为空字符串
+- 解决方案
+对function进行特殊处理
+```javascript
+const toString = (obj) => {
+  let result = JSON.stringify(obj, function(key, val) {
+        // 对function进行特殊处理
+        if (typeof val === 'function') {
+            return `~ha~${val}~ha~`;
+        }
+        return val;
+    });
+    // 再进行还原
+    do {
+        result = result.replace('\"~ha~', '').replace('~ha~\"', '').replace(/\\n/g, '').replace(/\\\"/g,"\"");//最后一个replace将release模式中莫名生成的\"转换成"
+    } while (result.indexOf('~ha~') >= 0);
+    return result;
+}
+const renderChart = (props) => {
+  const height = `${props.height || 400}px`;
+  const width = props.width ? `${props.width}px` : 'auto';
+  const backgroundColor = props.backgroundColor;
+  return `
+      document.getElementById('main').style.height = "${height}";
+      document.getElementById('main').style.width = "${width}";
+      document.getElementById('main').style.backgroundColor = "${backgroundColor}";
+      var myChart = echarts.init(document.getElementById('main'));
+      myChart.setOption(${toString(props.option)});
+      window.document.addEventListener('message', function(e) {
+        var req = JSON.parse(e.data);
+        switch (req.types) {
+          case "SET_OPTION":
+            myChart.setOption(req.payload.option,req.payload.notMerge,req.payload.lazyUpate);
+            break;
+          case "GET_IMAGE":
+            var base64 = myChart.getDataURL();
+            window.postMessage(JSON.stringify({"types":"GET_IMAGE","payload": base64}));
+            break;
+          case "CLEAR":
+            myChart.clear();
+            break;
+          default:
+            break;
+        }
+      });
+      myChart.on('click', function(params) {
+        var seen = [];
+        var paramsString = JSON.stringify(params, function(key, val) {
+          if (val != null && typeof val == "object") {
+            if (seen.indexOf(val) >= 0) {
+              return;
+            }
+            seen.push(val);
+          }
+          return val;
+        });
+        window.postMessage(JSON.stringify({"types":"ON_PRESS","payload": paramsString}));
+      });
+    `
+}
+
+export default renderChart;
+```
