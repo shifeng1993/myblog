@@ -13,7 +13,7 @@ webview 可以看做是react-native内置的浏览器，在rn使用过程中经�
 
 https://reactnative.cn/docs/webview/
 
-因为具体的用法，文档内都有示例，下面说一些文档中间没有的bug处理方法。
+因为具体的用法，文档内都有示例，下面说一些文档中间没有的处理方法。
 
 # webView不能设置宽高
 - 解决方案
