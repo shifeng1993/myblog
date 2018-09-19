@@ -107,3 +107,94 @@ const s2 = [ 2, 4 ]
 const subtracted = s1.filter(x => s2.indexOf(x) < 0)
 console.log(subtracted)
 ```
+
+# 去掉首位空格
+```javascript
+const trim = (str) => str.replace(/(^\s*)|(\s*$)/g, '')
+console.log(trim(' foo bar ')) // => 'foo bar'
+```
+
+# 升维，固定列秩
+```javascript
+const getMatrix = (arr, column) => {
+  let newarr = [];
+  if (!arr || !!arr && arr.length === 0 || typeof arr !== 'object') return newarr;
+  arr.map((item, index) => {
+    if (index - Math.floor(index / column) * column === 0) {
+      newarr[Math.floor(index / column)] = [];
+    }
+    newarr[Math.floor(index / column)].push(item);
+  })
+  return newarr;
+}
+console.log(getMatrix(['foo', 'bar', 'tol', 'hi'],2)); // => [['foo', 'bar'], ['tol', 'hi']]
+```
+
+# 计算某个时间和当前时间差
+```javascript
+const getDateTimeDiff = (dateStr) => {
+  let newDate = new Date();
+  var ms = newDate.getTime() - new Date(dateStr.replace(/-/g, "/")).getTime();   //时间差的毫秒数      
+
+  //计算出相差天数
+  var days = Math.floor(ms / (24 * 3600 * 1000))
+  //计算出小时数
+  var leave1 = ms % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+  var hours = Math.floor(leave1 / (3600 * 1000))
+  //计算相差分钟数
+  var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+  var minutes = Math.floor(leave2 / (60 * 1000))
+  //计算相差秒数
+  var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+  var seconds = Math.round(leave3 / 1000)
+  return `${days}天${hours}小时${minutes}分钟${seconds}秒`
+}
+```
+
+# 格式化时间格式成固定字符串格式
+```javascript
+  // 格式化时间
+  const dateFormat = (dateTime, format)=> {
+    const date = new Date(dateTime)
+    let fmt = format || 'yyyy-MM-dd hh:mm:ss'
+    const o = {
+      'M+': date.getMonth() + 1,
+      'd+': date.getDate(),
+      'h+': date.getHours(),
+      'm+': date.getMinutes(),
+      's+': date.getSeconds(),
+      'q+': Math.floor((date.getMonth() + 3) / 3),
+      S: date.getMilliseconds()
+    }
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (`${date.getFullYear()}`).substr(4 - RegExp.$1.length))
+    for (const k in o) {if (new RegExp(`(${k})`).test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : ((`00${o[k]}`).substr((`${o[k]}`).length)))}
+    return fmt
+  }
+```
+
+# 时间戳和时间格式互相转换
+```javascript
+// 计算时间戳
+const date = new Date();
+// 时间转时间戳
+const timeStamp = (date) =>  Math.round(date.getTime() / 1000);
+// 时间戳转时间
+const newDate = (timeStamp) => new Date(parseInt(timeStamp) * 1000)
+
+```
+
+# 计算字符串长度和限制字符串长度
+```javascript
+const strLen = (str) => {
+  return str.replace(/[\u0391-\uFFE5]/g, "aa").length;  //先把中文替换成两个字节的英文，在计算长度
+};
+
+const lineEllipsis = (str, len) => {
+  return (strLen(str) > len) ? `${str.substr(0, len)}...` : `${str}`;
+}
+
+console.log(strLen('qwertyui')); // => 8
+console.log(lineEllipsis('qwertyui', 6)) // => 'qwerty...'
+```
+
+
