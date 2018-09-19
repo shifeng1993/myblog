@@ -108,7 +108,7 @@ const subtracted = s1.filter(x => s2.indexOf(x) < 0)
 console.log(subtracted)
 ```
 
-# 去掉首位空格
+# 去掉字符串首尾空格
 ```javascript
 const trim = (str) => str.replace(/(^\s*)|(\s*$)/g, '')
 console.log(trim(' foo bar ')) // => 'foo bar'
@@ -196,5 +196,3 @@ const lineEllipsis = (str, len) => {
 console.log(strLen('qwertyui')); // => 8
 console.log(lineEllipsis('qwertyui', 6)) // => 'qwerty...'
 ```
-
-

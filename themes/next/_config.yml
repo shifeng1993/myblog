@@ -78,7 +78,7 @@ canonical: true
 seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
-subtitle: "师峰的个人站_正在面向工资编程"
+subtitle: "师峰的个人站_为了更快速效率编程"
 index_with_subtitle: true
 
 
