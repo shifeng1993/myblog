@@ -30,6 +30,16 @@ console.log(updated) // => [ { id: 1, score: 1 }, { id: 2, score: 2 }, { id: 3, 
 ```
 当然，“初始”常量是保持不变的。
 
+# 根据数组内对象的某个属性进行排序
+```javascript
+const keysrt = (key,desc) => (a,b)=> desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
+
+const arr = [{id:1,name:"a"},{id:3,name:"c"},{id:2,name:"b"},{id:4,name:"d"}];
+arr.sort(keysrt('name',true));
+arr.sort(keysrt('name',false));
+arr.sort(keysrt('id',false));
+```
+
 # 根据属性删除数组中的一个对象
 让我们根据`id === 3`来删除数组中的那个对象。
 ```javascript

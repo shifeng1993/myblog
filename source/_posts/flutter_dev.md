@@ -84,5 +84,27 @@ class App extends StatelessWidget {
 }
 ```
 
+#### 使用ListView.builder 出现无限加载的问题，和debug报错的问题。
+
+报错是因为视窗builder的item加五个之后，超出了数据list的长度，造成了下标越界。
+
+无限加载是因为，没有限制render长度。
+```dart
+@override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: (BuildContext context, int index) {
+          print(index);
+          if (index < _suggestions.length) {   // 加判断，动态render的下标小于输出的长度才render
+            return _listViewItem('$index');
+          }
+        },
+      ),
+    );
+  }
+```
+
 
 
