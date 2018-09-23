@@ -19,6 +19,31 @@ uniq和uniq2两种方法都可以转换成统一的数组。
 
 在转换成数组之前，记得`Set`对象本身也有很多有用的方法哦，比如`Size`或者`has`
 
+# 冒泡排序
+```javascript
+const arr = [1, 2, 3, 4, 6, 7, 3, 3, 2, 4, 6, 33, 5, 4, 234, 323, 2, 2, 24, 5, 7, 7, 2];
+
+const swap = (i, j, array) => {
+  var temp = array[j];
+  array[j] = array[i];
+  array[i] = temp;
+}
+
+const bubbleSort = (array) => {
+  var length = array.length, isSwap;
+  for (var i = 0; i < length; i++) {            //正序
+    isSwap = false;
+    for (var j = 0; j < length - 1 - i; j++) {     //正序
+      array[j] > array[j + 1] && (isSwap = true) && swap(j, j + 1, array);
+    }
+    if (!isSwap)
+      break;
+  }
+  return array;
+}
+console.log(bubbleSort(arr))
+```
+
 # 根据属性来更新一个数组中的对象
 接下来我们要更新数组中`id:3`的对象
 ```javascript
