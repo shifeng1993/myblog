@@ -42,7 +42,7 @@ const bubbleSort = (array) => {
   return array;
 }
 
-console.log(bubbleSort(arr))
+console.log(bubbleSort(arr)) // => [ 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 24, 33, 234, 323 ]
 ```
 
 # 根据属性来更新一个数组中的对象
@@ -159,11 +159,10 @@ console.log(asObjects) // => { a: 1, b: 2, c: 3  }
 
 # 两个`Set`对象相减
 ```javascript
-// subtract two sets
 const s1 = [ 1, 2, 3, 4, 5 ]
 const s2 = [ 2, 4 ]
-const subtracted = s1.filter(x => s2.indexOf(x) < 0)
-console.log(subtracted)
+const subtract = (s1, s2) => s1.filter(x => s2.indexOf(x) < 0);
+console.log(subtract(s1,s2)) // => [ 1, 3, 5 ]
 ```
 
 # 去掉字符串首尾空格
@@ -232,13 +231,14 @@ const getDateTimeDiff = (dateStr) => {
 
 # 时间戳和时间格式互相转换
 ```javascript
-// 计算时间戳
 const date = new Date();
 // 时间转时间戳
-const timeStamp = (date) =>  Math.round(date.getTime() / 1000);
+const timeStamp = (date) => Math.round(date.getTime() / 1000);
 // 时间戳转时间
 const newDate = (timeStamp) => new Date(parseInt(timeStamp) * 1000)
 
+console.log(timeStamp(date)); // => 1537940059
+console.log(newDate(timeStamp(date))); // => 2018-09-26T05:34:19.000Z
 ```
 
 # 计算字符串长度和限制字符串长度
