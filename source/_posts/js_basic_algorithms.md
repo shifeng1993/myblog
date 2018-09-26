@@ -11,9 +11,9 @@ tags:
 在这里使用的方法是用我们的数据新建一个`Set`对象，然后把它转换成数组（假如需要的话）：
 ```javascript
 // 返回去重后的数组
-const numbers = [1, 2, 1, 1, 2, 1, 3, 4, 1 ];
-const uniq = [...new Set(numbers)] // => [ 1, 2, 3, 4 ];
-const uniq2 = Array.from(new Set(numbers)) // => [ 1, 2, 3, 4 ];
+const arr = [1, 2, 1, 1, 2, 1, 3, 4, 1 ];
+const uniq = [...new Set(arr)] // => [ 1, 2, 3, 4 ];
+const uniq2 = Array.from(new Set(arr)) // => [ 1, 2, 3, 4 ];
 ```
 uniq和uniq2两种方法都可以转换成统一的数组。
 
@@ -41,42 +41,46 @@ const bubbleSort = (array) => {
   }
   return array;
 }
+
 console.log(bubbleSort(arr))
 ```
 
 # 根据属性来更新一个数组中的对象
-接下来我们要更新数组中`id:3`的对象
 ```javascript
 // 更新数组中对象的属性
-const initial = [ {id: 1, score: 1}, {id: 2, score: 2}, {id: 3, score: 4}];
+const json = [{id: 1, score: 1}, {id: 2, score: 2}, {id: 3, score: 4}];
+
 const newValue = {id: 3, score: 3};
-const updated = initial.map(x => x.id === newValue.id ? newValue : x);
-console.log(updated) // => [ { id: 1, score: 1 }, { id: 2, score: 2 }, { id: 3, score: 3 } ]
+
+const update = (newValue, alldata) => alldata.map(x => x.id === newValue.id ? newValue : x);
+
+console.log(update(newValue, json))// => [ { id: 1, score: 1 }, { id: 2, score: 2 }, { id: 3, score: 3 } ]
 ```
-当然，“初始”常量是保持不变的。
 
 # 根据数组内对象的某个属性进行排序
 ```javascript
-const keysrt = (key,desc) => (a,b)=> desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
+const keysrt = (key, desc) => (a, b) => desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
 
-const arr = [{id:1,name:"a"},{id:3,name:"c"},{id:2,name:"b"},{id:4,name:"d"}];
-arr.sort(keysrt('name',true));
-arr.sort(keysrt('name',false));
-arr.sort(keysrt('id',false));
+const arr = [{id: 1, name: "a"}, {id: 3, name: "c"}, {id: 2, name: "b"}, {id: 4, name: "d"}];
+
+arr.sort(keysrt('name', true));
+arr.sort(keysrt('name', false));
+arr.sort(keysrt('id', false));
 ```
 
 # 根据属性删除数组中的一个对象
-让我们根据`id === 3`来删除数组中的那个对象。
 ```javascript
 // 根据属性删除数组中的对象
+const json = [{id: 1, score: 1}, {id: 2, score: 2}, {id: 3, score: 4}];
 const removeId = 3;
-const without3 = initial.filter(x => x.id !== removeId);
-console.log(without3) // => [ { id: 1, score: 1 }, { id: 2, score: 2 } ]
+
+const datafilter = (id, data) => data.filter(x => x.id !== id);
+
+console.log(datafilter(removeId, json)) // => [ { id: 1, score: 1 }, { id: 2, score: 2 } ]
 ```
-当然，原始值还是保持不变。
 
 # 删除一个对象上的属性（key）
-你可以另辟蹊径：
+es6解构赋值
 ```javascript
 const a = {foo: 1, bar: 2, useless: 3};
 const {useless, ...newObj} = obj;
@@ -88,8 +92,8 @@ console.log(newObj) // => {foo: 1, bar: 2};
 ```javascript
 // merge an array of objects
 const data = [ {a: 1}, {b: 2}, {c: 3} ]
-const merged = data.reduce((res, obj) => ({...res, ...obj}), {})
-console.log(merged) // => { a: 1, b: 2, c: 3  }
+const merge = (data) => data.reduce((a, b) => ({...a, ...b}), {});
+console.log(merge(data)) // => { a: 1, b: 2, c: 3  }
 
 // merge an array of objects by property
 const toMerge = [
@@ -115,11 +119,30 @@ console.log(mergedByProperty) // =>
 ```
 
 # 扁平化（Flatten）
+1. 递归
 ```javascript
-// 将数组降维
-const arrayOfArray = [ [1, 2], [3, 4], [[5, 6]] ];
-const flattened = arrayOfArray.reduce((res, a) => [...res, ...a], [] );
-console.log(flattened) // => [1, 2, 3, 4, [5, 6]];
+const arr = [[1, 2], [3, 4], [[5, 6, [7, 8, [9, 10]]]]];
+
+const flatten = (arr) => {
+  let newarr = [];
+  arr.map(item => {
+    if (Array.isArray(item)) {
+      newarr = newarr.concat(flatten(item));
+    } else {
+      newarr.push(item);
+    }
+  })
+  return newarr;
+}
+
+console.log(flatten(arr));// => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+```
+
+2. 递归+reduce简化
+```javascript
+const arr = [[1, 2], [3, 4], [[5, 6, [7, 8, [9, 10]]]]];
+const flatten = (arr) => arr.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
+console.log(flatten(arr));// => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 ```
 
 # 成对（FromPairs）
