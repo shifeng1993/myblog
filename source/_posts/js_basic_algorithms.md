@@ -149,12 +149,8 @@ console.log(flatten(arr));// => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 ```javascript
 // fromPairs
 const pairs = [['a', 1], ['b', 2], ['c', 3]]
-const asObjects = pairs.reduce((res, [key, value]) => ({ ...res, [key]: value }), {})
-
-// Or event smarter (thanks to @nomaed for pointing this one out)
-const asObjects2 = { ...(new Map(pairs)) }
-
-console.log(asObjects) // => { a: 1, b: 2, c: 3  }
+const toMap = (pairs) => pairs.reduce((res, [key, value]) => ({...res, [key]: value}), {})
+console.log(toMap(pairs)) // => { a: 1, b: 2, c: 3  }
 ```
 
 # 两个`Set`对象相减

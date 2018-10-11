@@ -25,7 +25,6 @@ tags:
 
 ```javascript
 const basicSearch = (mainStr, str, offset) => {
-  let _this = this
   let mainLength = mainStr.length;
   let searchLength = str.length;
   if (searchLength > mainLength - offset) {
@@ -34,7 +33,7 @@ const basicSearch = (mainStr, str, offset) => {
   offset = offset || 0;
   for (let i = 0; i < str.length; i++) {
     if (str.charAt(i) !== mainStr.charAt(offset + i)) {
-      return _this.basicSearch(mainStr, str, offset + 1)
+      return basicSearch(mainStr, str, offset + 1)
     }
   }
   return offset;
@@ -46,45 +45,51 @@ const basicSearch = (mainStr, str, offset) => {
 const models = [{name: 'foo', age: 2},{name: 'bar', age: 4}];
 const matchs = ['name', 'age']
 
-const showList = (str) => {
-  let _this = this;
-  if (str !== '') {
-    let arr = []
-    // 按照两个维度查询，第一个维度循环 list。第二个维度循环mainstr
-    for (let i = 0; i < _this.list.length; i++) {
-      if (_this.matchs !== undefined) {
-        for (let j = 0; j < _this.matchs.length; j++) {
-          let queryMainStr = _this.list[i][_this.matchs[j]]
-          if (queryMainStr !== null) {
-            // 先全部转换成小写字母
-            let mainStr = queryMainStr.toLowerCase()
-            str = str.toLowerCase()
-            // 获取二分法返回的下标
-            let offset = _this.basicSearch(mainStr, str)
-            if (offset !== -1) {
-              if (arr.indexOf(_this.list[i]) === -1) {
-                  arr.push(_this.list[i]);
-              }
-              // 倒序
-              arr.reverse()
+const multiQuery = ({str, dataArr = [], keyArr}) => {
+  if (!Array.isArray(dataArr)) return dataArr    // 校验是数组
+  if (!str || typeof str !== 'string') return dataArr;                     // 需要搜索的字符串是必须
+
+  let arr = []
+  dataArr.map((item1, index) => {
+    if (!keyArr) {
+      // 如果多字段不存在
+      let mainStr = item1.toLowerCase()
+      str = str.toLowerCase()
+      let offset = basicSearch(mainStr, str)
+      if (offset !== -1) {
+        arr.push(item1)
+        arr.reverse()
+      }
+    } else if (!!keyArr && Array.isArray(keyArr)) {
+      // 如果多字段存在
+      keyArr.map((item2, index) => {
+        let queryMainStr;
+        if (typeof item1[item2] === 'string') {
+          queryMainStr = item1[item2]
+        } else {
+          queryMainStr = null
+        }
+        if (queryMainStr !== null) {
+          // 先全部转换成小写字母
+          let mainStr = queryMainStr.toLowerCase()
+          str = str.toLowerCase()
+          // 获取二分法返回的下标
+          let offset = basicSearch(mainStr, str)
+          if (offset !== -1) {
+            if (arr.indexOf(item1) === -1) {
+              arr.push(item1);
             }
+            // 倒序
+            arr.reverse()
           }
         }
-      } else {
-        let mainStr = _this.list[i].toLowerCase()
-        str = str.toLowerCase()
-        let offset = _this.basicSearch(mainStr, str)
-        if (offset !== -1) {
-          arr.push(_this.list[i])
-          arr.reverse()
-        }
-      }
+      })
+    } else {
+      arr = [...dataArr];
     }
-    return arr;
-  } else {
-    return models;
-  }
+  })
+  return arr;
 }
 // 运行函数 并打印
-console.log(showList('foo'))
+console.log(multiQuery({str: 'foo', dataArr: models, keyArr: matchs}))
 ```
