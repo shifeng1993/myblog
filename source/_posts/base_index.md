@@ -1,7 +1,7 @@
 ---
 title: 【基础学习】目录
 categories: base
-date: 2018-10-19
+date: 2018-10-19 22:30:00
 tags:
   - base
   - index
@@ -12,10 +12,11 @@ tags:
 鉴于明天是周末，今天想了想路线，还是觉得先做出一个目录的东西比较好，一个是方便以后索引和查找，一个是方便归类和总结。
 
 # html
-## 1. html基础
-## 2. html表格
-## 3. html表格
-## 4. 多媒体嵌入
+ 1. [html组成以及行内块级元素](https://www.shifeng1993.com/2018/10/19/base_html1/)
+ 2. [html元数据](https://www.shifeng1993.com/2018/10/20/base_html2/)
+ 3. html表格
+ 4. html表格
+ 5. 多媒体嵌入
 
 # css
 待更新

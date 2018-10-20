@@ -1,7 +1,7 @@
 ---
-title: 【基础学习-html】html基础
+title: 【基础学习-html】1.html组成以及行内块级元素
 categories: base
-date: 2018-10-19
+date: 2018-10-19 22:43:00
 tags:
   - base
   - html
@@ -55,14 +55,3 @@ html 不是一种编程语言，而是一种标记语言。
 - 行内 a、b、br、button、del、em、embed、i、iframe、img、input、ins、label、map、script、strong、select、slot、small、sub、svg、template、time、textarea
 - 块级 div、p、ul、ol、li、dl、dd、p、h1-h6、blockquote、address、article、aside、audio、canvas、fieldset、figcaption、figure、header、footer、form、hgroup、hr、noscript、pre、table、tfoot、video
 
-# head内元数据
-## title
-页面的标题
-```
-<head>
-  <meta charset="utf-8">
-  <title>one page</title>
-</head>
-```
-
-## meta
