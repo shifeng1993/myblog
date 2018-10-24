@@ -18,8 +18,8 @@ tags:
  4. [html超链接和URL](https://www.shifeng1993.com/2018/10/22/base_html4/)
  5. [html表格](https://www.shifeng1993.com/2018/10/23/base_html5/)
  6. [html表单基础](https://www.shifeng1993.com/2018/10/24/base_html6/)
- 7. [html表单高级](#)
- 7. [多媒体嵌入](#)
+ 7. [html表单高级](https://www.shifeng1993.com)
+ 7. [多媒体嵌入](https://www.shifeng1993.com)
 
 # css
 待更新
