@@ -17,9 +17,10 @@ tags:
  3. [html文档语义和结构](https://www.shifeng1993.com/2018/10/21/base_html3/)
  4. [html超链接和URL](https://www.shifeng1993.com/2018/10/22/base_html4/)
  5. [html表格](https://www.shifeng1993.com/2018/10/23/base_html5/)
- 6. [html表单基础](https://www.shifeng1993.com/2018/10/24/base_html6/)
- 7. [html表单高级](https://www.shifeng1993.com/2018/10/25/base_html7/)
- 8. [多媒体嵌入](https://www.shifeng1993.com)
+ 6. [html表单基础和原生基础控件](https://www.shifeng1993.com/2018/10/24/base_html6/)
+ 7. [html表单原生高级控件](https://www.shifeng1993.com/2018/10/26/base_html7/)
+ 8. [html表单校验](https://www.shifeng1993.com/2018/10/27/base_html8/)
+ 9. [多媒体嵌入](https://www.shifeng1993.com)
 
 # css
 待更新
