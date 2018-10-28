@@ -20,13 +20,14 @@ tags:
  6. [html表单基础和原生基础控件](https://www.shifeng1993.com/2018/10/24/base_html6/)
  7. [html表单原生高级控件](https://www.shifeng1993.com/2018/10/26/base_html7/)
  8. [html表单校验](https://www.shifeng1993.com/2018/10/27/base_html8/)
+ 8. [html表单数据提交](https://www.shifeng1993.com/2018/10/27/base_html9/)
  9. [多媒体嵌入](https://www.shifeng1993.com)
 
 # css
 待更新
 
 # js
-待更新
+ [深入理解JavaScript的设计模式](https://www.shifeng1993.com/2018/10/28/base_js_design_pattern1/)
 
 
 # 计算机基础
