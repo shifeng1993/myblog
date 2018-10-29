@@ -80,7 +80,7 @@ theme: next
 deploy:
   type: git
   repo: 
-    github: https://github.com/shifeng1993/shifeng1993.github.io.git
+    # github: https://github.com/shifeng1993/shifeng1993.github.io.git
     coding: https://git.coding.net/shifeng1993/shifeng1993.coding.me.git
   branch: master
 
