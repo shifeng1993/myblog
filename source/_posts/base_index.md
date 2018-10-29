@@ -24,7 +24,8 @@ tags:
  9. [多媒体嵌入](https://www.shifeng1993.com)
 
 # css
-待更新
+ 1. [css结构以及基础语法](https://www.shifeng1993.com/2018/10/29/base_css1/)
+ 2. [css简单选择器](https://www.shifeng1993.com/2018/10/29/base_css2/)
 
 # js
  [深入理解JavaScript的设计模式](https://www.shifeng1993.com/2018/10/28/base_js_design_pattern1/)

@@ -1,5 +1,5 @@
 ---
-title: 【基础学习-css】1.css简单选择器
+title: 【基础学习-css】2.css简单选择器
 categories: base
 date: 2018-10-29 23:02:00
 tags:
