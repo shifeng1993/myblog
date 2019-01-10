@@ -1,5 +1,5 @@
 ---
-title: 【js】模糊查询算法
+title: 【js】模糊查询算法完善
 categories: JS
 date: 2019-01-10
 tags: 
