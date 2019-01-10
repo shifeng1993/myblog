@@ -8,6 +8,7 @@ tags:
 ---
 
 最近，查漏补缺的时候，突然想到了前年写过的js模糊查询算法，于是就看能不能再完善一下。
+之前写的算法只支持简单维度的数据，不支持嵌套太深。如果数据嵌套一下就会出bug。
 
 # 模糊查询的思路
 参考传统c的二分递归算法，
@@ -37,13 +38,9 @@ const basicSearch = function (mainStr, str, offset) {
 }
 ```
 
-## 其次是序列化函数
+## 其次是查询函数
 ```javascript
-const multiQuery = function ({
-  str,
-  dataArr = [],
-  keyArr
-}) {
+const multiQuery = function ({str, dataArr = [], keyArr}) {
   if (!Array.isArray(dataArr)) throw '数据必须是一个数组'; // 校验是数组
   if (!str || typeof str !== 'string') throw '需要搜索的必须是一个字符串'; // 需要搜索的字符串是必须
 
@@ -84,15 +81,18 @@ const multiQuery = function ({
             dataArr: row[key],
             keyArr: keyArr
           })
+          // 如果递归能查到就push进list内
           if (queryArr.length !== 0) {
             arr.push(dataArr[i])
           }
         } else if (Object.prototype.toString.call(row[key]) === '[object Object]') {
+          // 如果是map的话，套进数组内执行递归
           let queryArr = multiQuery({
             str: str,
             dataArr: [row[key]],
             keyArr: keyArr
           })
+          // 如果递归能查到就push进list内
           if (queryArr.length !== 0) {
             arr.push(dataArr[i])
           }
