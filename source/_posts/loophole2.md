@@ -20,17 +20,24 @@ tags:
 
 - forEach 是循环每一项。但是没有返回值
   ```javascript
-  let arr = [];
-  list.filter((item, index)=>{
-    arr.push(item)
-  })
+  let list = [1, 2, 3, 4];
+  let newArr = [];
+  list.forEach((item, index) => {
+    if (index % 2 == 0) {
+      newArr.push(item);
+    }
+  });
+
+  console.log(newArr); // [ 1, 3 ]
   ```
 
 - map 同样是循环每一项。但是有返回值
   ```javascript
-  list.filter((item)=>{
-    return true
-  })
+  let list = [1, 2, 3, 4];
+
+  let newArr = list.map((item, index) => item + 1);
+
+  console.log(newArr); // [ 2, 3, 4, 5 ]
   ```
 # every
 every比较常用的场景是一个表单校验的情况，
