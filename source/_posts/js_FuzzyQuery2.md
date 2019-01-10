@@ -40,7 +40,11 @@ const basicSearch = function (mainStr, str, offset) {
 
 ## 其次是查询函数
 ```javascript
-const multiQuery = function ({str, dataArr = [], keyArr}) {
+const multiQuery = function ({
+  str,
+  dataArr = [],
+  keyArr
+}) {
   if (!Array.isArray(dataArr)) throw '数据必须是一个数组'; // 校验是数组
   if (!str || typeof str !== 'string') throw '需要搜索的必须是一个字符串'; // 需要搜索的字符串是必须
 
@@ -73,8 +77,7 @@ const multiQuery = function ({str, dataArr = [], keyArr}) {
             // 倒序
             arr.reverse()
           }
-        }
-        if (Array.isArray(row[key])) {
+        } else if (Array.isArray(row[key])) {
           // 如果是数组的话，执行递归
           let queryArr = multiQuery({
             str: str,
