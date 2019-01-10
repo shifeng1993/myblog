@@ -1,5 +1,5 @@
 ---
-title: 【查漏-js】3.数组的归并方法
+title: 【查漏-js】3.数组的归并方法reduce reduceRight
 categories: base
 date: 2019-01-11 00:13:00
 tags:
