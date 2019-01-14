@@ -1,7 +1,7 @@
 ---
 title: 【查漏-js】4.函数属性length，方法 apply、call、bind
 categories: base
-date: 2019-01-11 00:13:00
+date: 2019-01-14 13:41:00
 tags:
   - base
   - js
