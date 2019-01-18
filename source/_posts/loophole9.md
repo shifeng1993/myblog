@@ -77,8 +77,15 @@ table {
 }
 </style>
 # 键盘建码
+一般在对键盘进行监听时调用
+```javascript
+var textbox = document.getElementById("myText");
+EventUtil.addHandler(textbox, "keyup", function(event){
+    event = EventUtil.getEvent(event);
+    alert(event.keyCode);
+});
+```
 ## 主键盘字母和数字
-
 
 | 按键        | 键码    |
 | --------   | -----   |
