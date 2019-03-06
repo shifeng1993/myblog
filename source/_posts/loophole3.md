@@ -55,3 +55,22 @@ const flatten = (arr) => arr.reduce((prev,cur) => prev.concat(Array.isArray(cur)
 
 console.log(flatten(list));// => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 ```
+
+# 手动实现
+```javascript
+Array.prototype.reduce = function (reducer, initVal = null) {
+  for (let i = 0; i < this.length; i++) {
+    initVal = reducer(initVal, this[i], i, this);
+  }
+  return initVal;
+}
+
+let arr = [1, 2, 3, 4];
+
+let newarr = arr.reduce((val, current, index, arr) => {
+  let num = val += current;
+  return num;
+})
+
+console.log(newarr); // 10
+```
