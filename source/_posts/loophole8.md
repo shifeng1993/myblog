@@ -32,19 +32,7 @@ var bar = function () {
 bar(); // bar
 ```
 
-# 匿名函数实现块级作用域
 
-匿名函数实现的块级作用域用一个匿名函数立即执行，创建一个块级的私有作用域。
-
-```javascript
-// 匿名函数创建块级作用域
-(function () {
-  var i = 1;
-  console.log(i);
-})(); // hello
-
-console.log(i); // i is not defineds
-```
 
 # 闭包
 因为函数内 `var` 后变量作用域是函数内的。如果想在外部访问这个函数内的变量，就需要用到闭包。
@@ -71,3 +59,15 @@ console.log(girl()()); // lily
 ```
 
 
+# 闭包实现块级作用域
+用一个立即执行的函数套一个匿名函数
+
+```javascript
+// 匿名函数创建块级作用域
+(function () {
+  var i = 1;
+  console.log(i);
+})(); // hello
+
+console.log(i); // i is not defineds
+```
