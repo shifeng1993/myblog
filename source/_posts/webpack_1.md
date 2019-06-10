@@ -148,6 +148,7 @@ loader执行顺序（rules内enforce属性）：
 
 开启css模块化
 - 在options添加`modules:true`
+
 ```js
   module: {
     rules: [
@@ -169,6 +170,7 @@ loader执行顺序（rules内enforce属性）：
 ```
 - css文件内如果有使用预处理的文件，使用之前的loader进行预处理
 默认0，设置数字几个就是根据执行顺序往前走几个
+
 ```js
   module: {
     rules: [
@@ -210,14 +212,18 @@ stylus支持
 ## babel-loader
 调用@babel/core 插件，然后再调用@babel/preset-env进行转换
 如果使用了一些新的api 就需要使用@babel/core进行转化
+
 1. 先配置loader
+
 ```js
 {
   test: /\.js$/,
   use: 'babel-loader'
 },
 ```
+
 2. 配置.babelrc
+
 ```json
 {
   "presets": [
