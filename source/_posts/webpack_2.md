@@ -16,7 +16,21 @@ tags:
 -------------------
 # webpack-bundle-analyzer
 可视化分析工具，优化可以具体用这个来看包的大小以及分布
-
+```bash
+# NPM 
+npm install --save-dev webpack-bundle-analyzer
+# Yarn 
+yarn add -D webpack-bundle-analyzer
+```
+```js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+ 
+module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
+}
+```
 # 暴露变量的三种方式
 ## webpack.ProvidePlugin 注入变量
 不会将变量暴露到window上
@@ -121,7 +135,9 @@ module.exports={
 }
 ```
 
-- 注：不要全部给false，给false会出现另外一个问题，
+- 注：sideEffects不要给false，给false会出现如下副作用
+
+sideEffects 设置为false
 ```json
 {
   ...
@@ -129,12 +145,13 @@ module.exports={
   ...
 }
 ```
+在js中引入css，由于没有导出变量
 ```js
 import 'style.css'
 ```
-没有使用的地方，会把这个模块删掉。
+会被tree-shaking认为没有被使用，会把这个模块删掉。
 
-还要使用require()
+如果非要设置false，需使用require()进行引入
 ```js
 require('style.css');
 ```
@@ -274,7 +291,7 @@ modules.exports = {
 
 在webpack项目打包的文件配置：
 
-打包时候会在 manifest.json 里面找缓存
+打包时候首先会在 manifest.json 里面找缓存
 ```js
 const webpack = require('webpack');
 const path = require('path');
@@ -314,6 +331,7 @@ module.exports = {
 引用的时候引用manifest.json 会先去上面查找，找到后，加载对应的内容
 
 # include/exclude
+可以对loader 限制一些引入和排除范围，减少遍历次数
 ```js
 {
   test: /\.js$/,
@@ -327,15 +345,17 @@ module.exports = {
 
 # 图片和icon分开打包
 需注意svg不是图片，转化成base64会出问题
-- icon 走fileloader 包括 woff|svg|eot|ttf 等
-- 图片 走urlloader png|jpg 等等
+- icon 走file-loader 包括 woff|svg|eot|ttf 等
+- 图片 走url-loader png|jpg 等等
 
-fileloader 只有copy功能，urlloader 包含limit
+file-loader 只有copy功能，url-loader 包含limit，可以转化为base64
 
 # splitChunks
 一般在生产环境中使用，dev环境一般使用dllplugin
 - 实现代码的公用
 - 分割第三方模块
+
+如果两者在生产环境中共用，可能会导致打包重复，或者不是全量包的问题
 
 ```js
 module.exports = {
@@ -375,7 +395,7 @@ module.exports = {
 ```
 
 # resolve
-可以减少查找文件的范围
+可以减少查找文件的范围，设置扩展名，别名，主入口名等等。
 ```js
 module.exports = {
   ...
