@@ -1,7 +1,7 @@
 ---
 title: 【js】常用的一些基础算法
 categories: JS
-date: 2018-09-19
+date: 2019-08-30 23:52:43
 tags:
   - JS
   - 算法
@@ -183,6 +183,260 @@ const getMatrix = (arr, column) => {
 console.log(getMatrix(['foo', 'bar', 'tol', 'hi'],2)); // => [['foo', 'bar'], ['tol', 'hi']]
 ```
 
+# 树结构转化为数组
+```js
+// 普通写法
+let a = function (arr, pid, extendArr) {
+  let newArr = extendArr ? extendArr : [];
+  if (Array.isArray(arr)) {
+    arr.forEach(({children, ...item}) => {
+      newArr.push(!pid ? {...item} : {...item, pid});
+      children && a(children, item.id, newArr);
+    })
+  }
+  return newArr;
+}
+
+// 递归写法
+let b = (arr, pid) => {
+  return Array.isArray(arr) ? arr.reduce((prev, {children, ...cur}) => {
+    return prev.concat([!pid ? {...cur} : {...cur, pid}, ...a(children, cur.id)])
+  }, []) : arr
+}
+
+let tree = [
+  {
+    name: 'asd',
+    id: 1,
+    children: [
+      {
+        name: '11',
+        id: 11,
+        children: [
+          {
+            name: '111',
+            id: 111,
+            children: []
+          }
+        ]
+      },
+      {
+        name: '12',
+        id: 12,
+        children: [
+          {
+            name: '121',
+            id: 121,
+            children: []
+          }
+        ]
+      }, {
+        name: '13',
+        id: 13,
+        children: [
+          {
+            name: '131',
+            id: 131,
+            children: []
+          }
+        ]
+      }
+    ]
+  }
+]
+
+console.log(a(tree))
+console.log(b(tree))
+```
+
+# 数组还原为树结构
+```js
+function arrToTree(list) {
+  let temp = {};
+  let tree = [];
+  for (let i in list) {
+    temp[list[i].id] = list[i];
+  }
+  for (let i in temp) {
+    if (temp[i].pid) {
+      if (!temp[temp[i].pid].children) {
+        temp[temp[i].pid].children = [];
+      }
+      temp[temp[i].pid].children.push(temp[i]);
+    } else {
+      tree.push(temp[i]);
+    }
+  }
+  return tree;
+}
+
+let arrTree = [
+  {name: 'asd', id: 1},
+  {name: 'asd2', id: 2},
+  {name: '11', id: 11, pid: 1},
+  {name: '111', id: 111, pid: 11},
+  {name: '1111', id: 1111, pid: 111},
+  {name: '11111', id: 11111, pid: 1111},
+  {name: '11', id: 12, pid: 2},
+  {name: '111', id: 121, pid: 12},
+  {name: '1111', id: 1211, pid: 121},
+  {name: '11111', id: 12111, pid: 1211},
+  // {name: '12', id: 12, pid: 1},
+  // {name: '121', id: 121, pid: 12},
+  // {name: '13', id: 13, pid: 1},
+  // {name: '131', id: 131, pid: 13}
+]
+
+// console.log(treeToArr(tree))
+// console.log(treeToArrReduce(tree))
+console.log(arrToTree(arrTree))
+```
+
+# 下划线写法和驼峰写法互转
+```js
+transformField(str, prefix = '', rmPrefix) {
+    let newstr = '';
+    if (rmPrefix) {
+      const reg = new RegExp(rmPrefix);
+      str = str.replace(reg, '');
+      // console.log(str);
+    }
+    if (/\_/g.test(str)) {
+      // 如果是下划线写法，则转化成驼峰 
+      newstr = str.split('_').map((char, index) => (index === 0 ? char : char.slice(0, 1).toUpperCase() + char.slice(1))).join('');
+    } else {
+      // 如果是驼峰则转成下划线 
+      newstr = str.replace(/[A-Z]/g, (...args) => (`_${args[0].toLowerCase()}`));
+    }
+    // console.log(prefix + newstr);
+    return prefix + newstr;
+  },
+```
+
+# 对象的key值转化为驼峰或者下划线
+```js
+function transformField(str, prefix = '', rmPrefix) {
+  let newstr = '';
+  if (rmPrefix) {
+    const reg = new RegExp(rmPrefix);
+    str = str.replace(reg, '');
+    // console.log(str);
+  }
+  if (/\_/g.test(str)) {
+    // 如果是下划线写法，则转化成驼峰 
+    newstr = str.split('_').map((char, index) => (index === 0 ? char : char.slice(0, 1).toUpperCase() + char.slice(1))).join('');
+  } else {
+    // 如果是驼峰则转成下划线 
+    newstr = str.replace(/[A-Z]/g, (...args) => (`_${args[0].toLowerCase()}`));
+  }
+  // console.log(prefix + newstr);
+  return prefix + newstr;
+}
+
+function dateFormat(date, format) {let fmt = format || 'yyyy-MM-dd hh:mm:ss'; const o = {'M+': date.getMonth() + 1, 'd+': date.getDate(), 'h+': date.getHours(), 'm+': date.getMinutes(), 's+': date.getSeconds(), 'q+': Math.floor((date.getMonth() + 3) / 3), 'S+': date.getMilliseconds()}; if (/(y+)/.test(fmt)) {fmt = fmt.replace(RegExp.$1, (`${date.getFullYear()}`).substr(4 - RegExp.$1.length));} for (const k in o) {if (new RegExp(`(${k})`).test(fmt)) {fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : ((`00${o[k]}`).substr((`${o[k]}`).length)));} } return fmt;}
+
+const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
+const isArray = (val) => Object.prototype.toString.call(val) === '[object Array]';
+const isDate = (val) => Object.prototype.toString.call(val) === '[object Date]';
+
+// 对象的key值转化为驼峰或者下划线 deep 配置deep为false需要进行深度的递归
+function transformObj(obj, options = {}) {
+  let {prefix, rmPrefix, deep, format} = options;
+  if (!prefix) {
+    prefix = '';
+  }
+  if (!rmPrefix) {
+    rmPrefix = '';
+  }
+  if (!deep) {
+    deep = false;
+  }
+  if (!format) {
+    format = 'yyyy-MM-dd hh:mm:ss';
+  }
+  // 筛选出 array object 
+  if (isArray(obj) || isObject(obj)) {
+    const handleObj = o => {
+      const n = {};
+      Object.keys(o).forEach(key => {
+        if (!deep) {
+          n[transformField(key, prefix, rmPrefix)] = isDate(o[key]) ? dateFormat(new Date(o[key]), format) : o[key];
+        } else {
+          n[transformField(key, prefix, rmPrefix)] = isArray(o[key]) || isObject(o[key]) ? transformObj(o[key], {deep}) : (isDate(o[key]) ? dateFormat(new Date(o[key]), format) : o[key])
+        }
+      });
+      return n;
+    };
+    return Array.isArray(obj) ? obj.map(item => handleObj(item)) : handleObj(obj);
+  }
+  if (isDate(new Date(obj))) {
+    return dateFormat(new Date(obj), format);
+  }
+  return obj;
+}
+
+let obj = [{
+  article_id: '123',
+  article_name: 'hello',
+  article_create_time: new Date(),
+  article_create_user: {
+    user_id: '111',
+    user_name: 'admin',
+    user_create_time: new Date()
+  },
+  article_thumb_user: [
+    {
+      user_id: '111',
+      user_name: 'admin',
+      user_create_time: new Date()
+    },
+    {
+      user_id: '111',
+      user_name: 'admin',
+      user_create_time: new Date()
+    },
+  ]
+}]
+
+console.log(transformObj(obj, {deep: true}))
+```
+
+# 删除数组或者对象中某个字段
+```js
+const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
+const isArray = (val) => Object.prototype.toString.call(val) === '[object Array]';
+
+/**
+ * @description: 删除数组或者对象中某个字段
+ * @param {Array} fields 需要删除的字段数组
+ * @param {Array || Object} obj 原始数据
+ * @param {Object} options // 配置 deep 为是否递归
+ * @return: 删除字段后的 array 或者 object
+ */
+function rmField(fields, obj, options = {}) {
+  let {deep} = options; if (!deep) {deep = false;}
+  // 筛选出 array object 
+  if (isArray(obj) || isObject(obj)) {
+    const handleObj = o => {
+      const n = {}; Object.keys(o).forEach(key => {
+        if (!fields.includes(key)) {
+          n[key] = !deep ? o[key] : (n[key] = isArray(o[key]) || isObject(o[key]) ? rmField(fields, o[key], {deep}) : o[key]);
+        }
+      });
+      return n;
+    };
+    return Array.isArray(obj) ? obj.map(item => handleObj(item)) : handleObj(obj);
+  }
+  return obj;
+}
+
+let obj1 = {name: 1, id: 1};
+let obj2 = [{name: 1, id: 1}]
+
+console.log(rmField(['name'], obj1, {deep: true})) // { id: 1 }
+console.log(rmField(['id'], obj2, {deep: true})) // [ { name: 1 } ]
+```
+
 # 计算某个时间和当前时间差
 ```javascript
 const getDateTimeDiff = (dateStr) => {
@@ -247,6 +501,6 @@ const lineEllipsis = (str, len) => {
   return (strLen(str) > len) ? `${str.substr(0, len)}...` : `${str}`;
 }
 
-console.log(strLen('qwertyui')); // => 8
-console.log(lineEllipsis('qwertyui', 6)) // => 'qwerty...'
+console.log(strLen('qwerty')); // => 8
+console.log(lineEllipsis('qwerty', 6)) // => 'qwerty...'
 ```
