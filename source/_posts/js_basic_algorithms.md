@@ -249,7 +249,7 @@ console.log(a(tree))
 console.log(b(tree))
 ```
 
-# 数组还原为树结构
+# 数组转为树结构
 ```js
 function arrToTree(list) {
   let temp = {};
@@ -280,15 +280,9 @@ let arrTree = [
   {name: '11', id: 12, pid: 2},
   {name: '111', id: 121, pid: 12},
   {name: '1111', id: 1211, pid: 121},
-  {name: '11111', id: 12111, pid: 1211},
-  // {name: '12', id: 12, pid: 1},
-  // {name: '121', id: 121, pid: 12},
-  // {name: '13', id: 13, pid: 1},
-  // {name: '131', id: 131, pid: 13}
+  {name: '11111', id: 12111, pid: 1211}
 ]
 
-// console.log(treeToArr(tree))
-// console.log(treeToArrReduce(tree))
 console.log(arrToTree(arrTree))
 ```
 
