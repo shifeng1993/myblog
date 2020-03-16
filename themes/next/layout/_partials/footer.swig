@@ -1,4 +1,4 @@
-<div class="copyright">{#
+<div class="copyright">Copyright {#
 #}{% set current = date(Date.now(), "YYYY") %}{#
 #}&copy; {% if theme.footer.since and theme.footer.since != current %}{{ theme.footer.since }} &mdash; {% endif %}{#
 #}<span itemprop="copyrightYear">{{ current }}</span>
@@ -20,7 +20,8 @@
   #}</span>
   {% endif %}
 </div>
-
+<a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">陕ICP备16013864号</a>
+<span class="post-meta-divider">|</span>
 {% if theme.footer.powered %}
   <div class="powered-by">{#
   #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>') }}{#
@@ -33,7 +34,7 @@
 
 {% if theme.footer.theme.enable %}
   <div class="theme-info">
-    <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    <p><a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
   </div>
 {% endif %}
 
