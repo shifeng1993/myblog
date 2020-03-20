@@ -1,0 +1,32 @@
+[
+  {
+    "name": "react-native-secharts",
+    "url": "https://github.com/shifeng1993/react-native-secharts",
+    "desc": "react-native 图表组件"
+  },
+  {
+    "name": "react-native-qr-scanner",
+    "url": "https://github.com/shifeng1993/react-native-qr-scanner",
+    "desc": "react-native 二维码扫描组件"
+  },
+  {
+    "name": "node-server",
+    "url": "https://github.com/shifeng1993/nodeServer",
+    "desc": "简单的跨域代理"
+  },
+  {
+    "name": "flutter-project",
+    "url": "https://github.com/shifeng1993/flutter-project",
+    "desc": "flutter app"
+  },
+  {
+    "name": "koa-basic",
+    "url": "https://github.com/shifeng1993/koa_basic",
+    "desc": "Typescript版本的koa基础服务"
+  },
+  {
+    "name": "tensorflow-demo",
+    "url": "https://github.com/shifeng1993/tf-demo",
+    "desc": "TensorFlow 机器学习的demo集"
+  }
+]

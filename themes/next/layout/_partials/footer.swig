@@ -20,11 +20,10 @@
   #}</span>
   {% endif %}
 </div>
-<a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">陕ICP备16013864号</a>
-<span class="post-meta-divider">|</span>
+
 {% if theme.footer.powered %}
   <div class="powered-by">{#
-  #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>') }}{#
+  #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">陕ICP备16013864号</a>') }}{#
 #}</div>
 {% endif %}
 
@@ -34,7 +33,7 @@
 
 {% if theme.footer.theme.enable %}
   <div class="theme-info">
-    <p><a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    <p>Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
   </div>
 {% endif %}
 
