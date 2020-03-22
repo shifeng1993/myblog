@@ -5,5 +5,10 @@ type: "about"
 comments: false
 ---
 
-hahah
-关于我
+# 个人信息
+- 海色
+- 职业：web前端开发工程师
+- 城市：西安
+
+# 联系方式
+- 邮箱： shifeng199307@gmail.com
