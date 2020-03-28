@@ -1,12 +1,14 @@
 ---
 title: 【项目方案】i18n国际化文件treeshaking
-categories: flutter
+categories: 项目方案
 date: 2020-03-28 16:00:55
 tags:
   - 项目方案
   - 国际化
   - i18n
 ---
+
+> i18n treeshaking 顾名思义，就如同 webpack 的 treeshaking（树摇晃） 操作一样，去掉没有使用的i18n国际化键值对。
 
 好久没有更新博客了，去年下半年迷一样的状态，，一月放假，疫情又懒得动。
 
@@ -16,9 +18,6 @@ tags:
 
 正文开始！！！
 
----------------------------------
-# i18n treeshaking
-顾名思义，就如同 webpack 的 treeshaking（树摇晃） 操作一样，去掉没有使用的i18n国际化键值对。
 
 ## 思考（Why do this？）
 1. 项目迭代版本，旧的国际化键值对因为业务变更等因素，很多使用的地方会被新业务覆盖甚至删除。

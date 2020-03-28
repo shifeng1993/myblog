@@ -5,14 +5,11 @@
     <% if (is_post()) { %>
       <%- partial('_partial/post/actions_desktop') %>
     <% } %>
-    <div class="content index py4">
+    <div class="content index py3" style="padding-bottom: 4rem;"> 
         <% if (!is_post()) { %>
           <%- partial('_partial/header') %>
         <% } %>
         <%- body %>
-        <% if (is_post()) { %>
-          <%- partial('_partial/post/actions_mobile') %>
-        <% } %>
         <%- partial('_partial/footer') %>
     </div>
     <%- partial('_partial/styles') %>

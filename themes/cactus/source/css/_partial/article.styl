@@ -24,7 +24,7 @@ article
       display: inline
 
   .content
-    h2:before
+    h2:before,h3:before
       position: absolute
       top: -4px
       left: -1rem
@@ -128,10 +128,9 @@ article
   .category-link
     underline(10px, $color-link)
 
-@media (min-width: 480px)
-  .article-tag,
-  .article-category
-    display: inline
+.article-tag,
+.article-category
+  display: inline
 
-    &:before
-      content: "|"
+  &:before
+    content: "|"
