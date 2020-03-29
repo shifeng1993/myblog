@@ -7,7 +7,7 @@ tags:
   - 算法
 ---
 
-# 数组去重
+## 数组去重
 在这里使用的方法是用我们的数据新建一个`Set`对象，然后把它转换成数组（假如需要的话）：
 ```javascript
 // 返回去重后的数组
@@ -19,7 +19,7 @@ uniq和uniq2两种方法都可以转换成统一的数组。
 
 在转换成数组之前，记得`Set`对象本身也有很多有用的方法哦，比如`Size`或者`has`
 
-# 冒泡排序
+## 冒泡排序
 ```javascript
 const arr = [1, 2, 3, 4, 6, 7, 3, 3, 2, 4, 6, 33, 5, 4, 234, 323, 2, 2, 24, 5, 7, 7, 2];
 
@@ -45,7 +45,7 @@ const bubbleSort = (array) => {
 console.log(bubbleSort(arr)) // => [ 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 24, 33, 234, 323 ]
 ```
 
-# 根据属性来更新一个数组中的对象
+## 根据属性来更新一个数组中的对象
 ```javascript
 // 更新数组中对象的属性
 const json = [{id: 1, score: 1}, {id: 2, score: 2}, {id: 3, score: 4}];
@@ -57,7 +57,7 @@ const update = (newValue, alldata) => alldata.map(x => x.id === newValue.id ? ne
 console.log(update(newValue, json))// => [ { id: 1, score: 1 }, { id: 2, score: 2 }, { id: 3, score: 3 } ]
 ```
 
-# 根据数组内对象的某个属性进行排序
+## 根据数组内对象的某个属性进行排序
 ```javascript
 const keysrt = (key, desc) => (a, b) => desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
 
@@ -68,7 +68,7 @@ arr.sort(keysrt('name', false));
 arr.sort(keysrt('id', false));
 ```
 
-# 根据属性删除数组中的一个对象
+## 根据属性删除数组中的一个对象
 ```javascript
 // 根据属性删除数组中的对象
 const json = [{id: 1, score: 1}, {id: 2, score: 2}, {id: 3, score: 4}];
@@ -79,7 +79,7 @@ const datafilter = (id, data) => data.filter(x => x.id !== id);
 console.log(datafilter(removeId, json)) // => [ { id: 1, score: 1 }, { id: 2, score: 2 } ]
 ```
 
-# 删除一个对象上的属性（key）
+## 删除一个对象上的属性（key）
 es6解构赋值
 ```javascript
 const a = {foo: 1, bar: 2, useless: 3};
@@ -87,7 +87,7 @@ const {useless, ...newObj} = obj;
 console.log(newObj) // => {foo: 1, bar: 2};
 ```
 
-# 合并数组中的对象
+## 合并数组中的对象
 下面的代码中，我们既可以合并对象，也可以根据它们的属性来更新数组项。
 ```javascript
 // merge an array of objects
@@ -118,7 +118,7 @@ console.log(mergedByProperty) // =>
  */
 ```
 
-# 扁平化（Flatten）
+## 扁平化（Flatten）
 1. 递归
 ```javascript
 const arr = [[1, 2], [3, 4], [[5, 6, [7, 8, [9, 10]]]]];
@@ -145,7 +145,7 @@ const flatten = (arr) => arr.reduce((a, b) => a.concat(Array.isArray(b) ? flatte
 console.log(flatten(arr));// => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
 ```
 
-# 成对（FromPairs）
+## 成对（FromPairs）
 ```javascript
 // fromPairs
 const pairs = [['a', 1], ['b', 2], ['c', 3]]
@@ -153,7 +153,7 @@ const toMap = (pairs) => pairs.reduce((res, [key, value]) => ({...res, [key]: va
 console.log(toMap(pairs)) // => { a: 1, b: 2, c: 3  }
 ```
 
-# 两个`Set`对象相减
+## 两个`Set`对象相减
 ```javascript
 const s1 = [ 1, 2, 3, 4, 5 ]
 const s2 = [ 2, 4 ]
@@ -161,13 +161,13 @@ const subtract = (s1, s2) => s1.filter(x => s2.indexOf(x) < 0);
 console.log(subtract(s1,s2)) // => [ 1, 3, 5 ]
 ```
 
-# 去掉字符串首尾空格
+## 去掉字符串首尾空格
 ```javascript
 const trim = (str) => str.replace(/(^\s*)|(\s*$)/g, '')
 console.log(trim(' foo bar ')) // => 'foo bar'
 ```
 
-# 升维，固定列秩
+## 升维，固定列秩
 ```javascript
 const getMatrix = (arr, column) => {
   let newarr = [];
@@ -183,7 +183,7 @@ const getMatrix = (arr, column) => {
 console.log(getMatrix(['foo', 'bar', 'tol', 'hi'],2)); // => [['foo', 'bar'], ['tol', 'hi']]
 ```
 
-# 树结构转化为数组
+## 树结构转化为数组
 ```js
 // 普通写法
 let a = function (arr, pid, extendArr) {
@@ -249,7 +249,7 @@ console.log(a(tree))
 console.log(b(tree))
 ```
 
-# 数组转为树结构
+## 数组转为树结构
 ```js
 function arrToTree(list) {
   let temp = {};
@@ -286,7 +286,7 @@ let arrTree = [
 console.log(arrToTree(arrTree))
 ```
 
-# 下划线写法和驼峰写法互转
+## 下划线写法和驼峰写法互转
 ```js
 transformField(str, prefix = '', rmPrefix) {
     let newstr = '';
@@ -307,7 +307,7 @@ transformField(str, prefix = '', rmPrefix) {
   },
 ```
 
-# 对象的key值转化为驼峰或者下划线
+## 对象的key值转化为驼峰或者下划线
 ```js
 function transformField(str, prefix = '', rmPrefix) {
   let newstr = '';
@@ -395,7 +395,7 @@ let obj = [{
 console.log(transformObj(obj, {deep: true}))
 ```
 
-# 删除数组或者对象中某个字段
+## 删除数组或者对象中某个字段
 ```js
 const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
 const isArray = (val) => Object.prototype.toString.call(val) === '[object Array]';
@@ -431,7 +431,7 @@ console.log(rmField(['name'], obj1, {deep: true})) // { id: 1 }
 console.log(rmField(['id'], obj2, {deep: true})) // [ { name: 1 } ]
 ```
 
-# 计算某个时间和当前时间差
+## 计算某个时间和当前时间差
 ```javascript
 const getDateTimeDiff = (dateStr) => {
   let newDate = new Date();
@@ -452,7 +452,7 @@ const getDateTimeDiff = (dateStr) => {
 }
 ```
 
-# 格式化时间格式成固定字符串格式
+## 格式化时间格式成固定字符串格式
 ```javascript
   // 格式化时间
   const dateFormat = (dateTime, format)=> {
@@ -473,7 +473,7 @@ const getDateTimeDiff = (dateStr) => {
   }
 ```
 
-# 时间戳和时间格式互相转换
+## 时间戳和时间格式互相转换
 ```javascript
 const date = new Date();
 // 时间转时间戳
@@ -485,7 +485,7 @@ console.log(timeStamp(date)); // => 1537940059
 console.log(newDate(timeStamp(date))); // => 2018-09-26T05:34:19.000Z
 ```
 
-# 计算字符串长度和限制字符串长度
+## 计算字符串长度和限制字符串长度
 ```javascript
 const strLen = (str) => {
   return str.replace(/[\u0391-\uFFE5]/g, "aa").length;  //先把中文替换成两个字节的英文，在计算长度
