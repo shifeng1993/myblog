@@ -14,7 +14,7 @@ tags:
 下面是正文，顺序不分先后
 
 -------------------
-# webpack-bundle-analyzer
+## webpack-bundle-analyzer
 可视化分析工具，优化可以具体用这个来看包的大小以及分布
 ```bash
 # NPM 
@@ -31,8 +31,8 @@ module.exports = {
   ]
 }
 ```
-# 暴露变量的三种方式
-## webpack.ProvidePlugin 注入变量
+## 暴露变量的三种方式
+### webpack.ProvidePlugin 注入变量
 不会将变量暴露到window上
 ```js
 const webpack = require('webpack');
@@ -47,7 +47,7 @@ module.exports = {
 }
 ```
 
-## expose-loader 暴露到window上
+### expose-loader 暴露到window上
 帮你把一些变量放到window上
 
 1. 先安装expose-loader
@@ -73,7 +73,7 @@ module.exports = {
 }
 ```
 
-## 外部变量externals + cdn
+### 外部变量externals + cdn
 添加cdn资源插件 add-asset-html-cdn-webpack-plugin
 可以把静态资源放到cdn上
 - 可以提高页面加载速度方式
@@ -108,7 +108,7 @@ module.exports={
 }
 ```
 
-# tree-shaking 消除无用代码
+## tree-shaking 消除无用代码
 只针对于es6模块 import export，生产环境会自动生效
 - import 静态 必须先导入，才能进行使用
 - require 动态 可以在代码中实时导入使用
@@ -156,7 +156,7 @@ import 'style.css'
 require('style.css');
 ```
 
-# scope-hosting(自动，不需要手动优化)
+## scope-hosting(自动，不需要手动优化)
 mode为prod时，把变量进行压缩，去提取模块中导出的变量
 ```js
 let a = 1;
@@ -169,7 +169,7 @@ scope-hosting后
 console.log(3);
 ```
 
-# 热更新
+## 热更新
 热更新会保持之前状态，进行更新dom
 ```js
 module.exports = {
@@ -200,7 +200,7 @@ if(module.hot) {
 }
 ```
 
-# 懒加载
+## 懒加载
 import() 动态导入，是实验性的草案，返回一个promise对象，所以可以用async+await 或者promise.then()
 
 需要新增一个插件`@babel/plugin-syntax-dynamic-import`
@@ -244,7 +244,7 @@ button.addEventListener('click',()=>{
 document.body.appendChild(button);
 ```
 
-# ignorePlugin
+## ignorePlugin
 webpack.IgnorePlugin(), 也有另外一个插件 `ContextReplacementPlugin`
 
 例如某个类库下还有引用大量的包，被打包进bundle内，则可以用这个进行忽略
@@ -263,7 +263,7 @@ module.exports = {
 import 'moment/locale/zh-cn'; // 在使用的地方再次引入
 ```
 
-# dllPlugin
+## dllPlugin
 先将不需要频繁改变的代码打包好放在那，节约构建时间，一般用在dev环境中，生产环境则一般用splitChunks快速拆分多个包
 
 新建一个`webpack.dll.js`
@@ -330,7 +330,7 @@ module.exports = {
 总结：先产生mainfest.json （name） 和一个js文件全局变量名字一致
 引用的时候引用manifest.json 会先去上面查找，找到后，加载对应的内容
 
-# include/exclude
+## include/exclude
 可以对loader 限制一些引入和排除范围，减少遍历次数
 ```js
 {
@@ -343,14 +343,14 @@ module.exports = {
 },
 ```
 
-# 图片和icon分开打包
+## 图片和icon分开打包
 需注意svg不是图片，转化成base64会出问题
 - icon 走file-loader 包括 woff|svg|eot|ttf 等
 - 图片 走url-loader png|jpg 等等
 
 file-loader 只有copy功能，url-loader 包含limit，可以转化为base64
 
-# splitChunks
+## splitChunks
 一般在生产环境中使用，dev环境一般使用dllplugin
 - 实现代码的公用
 - 分割第三方模块
@@ -394,7 +394,7 @@ module.exports = {
 }
 ```
 
-# resolve
+## resolve
 可以减少查找文件的范围，设置扩展名，别名，主入口名等等。
 ```js
 module.exports = {
@@ -411,7 +411,7 @@ module.exports = {
 }
 ```
 
-# devtool
+## devtool
 https://webpack.docschina.org/configuration/devtool/
 
 一般来讲做以下配置
@@ -428,10 +428,10 @@ module.exports = {
 }
 ```
 
-# 多线程打包 happypack
+## 多线程打包 happypack
 项目比较大的时候会使用，因为开进程比较浪费时间。
 
-# 总结
+## 总结
 比较有效的优化手段
 
 - CDN

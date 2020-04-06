@@ -13,7 +13,7 @@ webpack我接触是从1.0，之前是概粗略的看了一下，做了个简单�
 
 ---------------------------------
 
-# webpack是干什么的? - 静态模块打包工具（编译成静态资源）
+## webpack是干什么的? - 静态模块打包工具（编译成静态资源）
 - 代码转换：TypeScript 编译成 JavaScript、SCSS 编译成 CSS 等。
 - 文件优化：压缩 JavaScript、CSS、HTML 代码，压缩合并图片等。
 - 代码分割：提取多个页面的公共代码、提取首屏不需要执行部分的代码让其异步加载。
@@ -22,7 +22,7 @@ webpack我接触是从1.0，之前是概粗略的看了一下，做了个简单�
 - 代码校验：在代码被提交到仓库前需要校验代码是否符合规范，以及单元测试是否通过。
 - 自动发布：更新完代码后，自动构建出线上发布代码并传输给发布系统。
 
-# webpack4 需要安装哪两个包
+## webpack4 需要安装哪两个包
 - webpack
 - webpack-cli
 
@@ -32,7 +32,7 @@ $ npm install webpack webpack-cli --save-dev
 $ yarn add webpack webpack-cli --dev
 ```
 
-# 当前项目怎么运行webpack打包
+## 当前项目怎么运行webpack打包
 `package.json`内将命令加入script
 ```json
 "scripts": {
@@ -40,13 +40,13 @@ $ yarn add webpack webpack-cli --dev
 },
 ```
 
-# webpack怎么实现打包（原理）
+## webpack怎么实现打包（原理）
 1. 找到入口，例如`src/index.js`
 2. 找到`index.js`引入了哪些模块，并会加载对应的模块 进行抽象语法树（ast）解析
 3. index是入口 执行的时候，默认会从入口进行解析 `require` 方法改写成 `__webpack_require__`
 (需要找到入口，并找到入口中的所有依赖，之后加载依赖) + 模板 = 渲染之后的结果
 
-# webpack配置文件 `webpack.config.js`
+## webpack配置文件 `webpack.config.js`
 一般不会只是使用cli行进行打包，还需要根据项目具体情况进行具体配置，这时要在项目根目录下新增一个`webpack.config.js`这个文件是基于nodejs来写的，所以使用的是commonjs规范
 
 以上是默认的配置文件名，还可以自定义文件名，通过cli命令`--config xxxxx.js`来指定对应的文件和路径，例如：
@@ -58,7 +58,7 @@ $ yarn add webpack webpack-cli --dev
 },
 ```
 ---------------------------------
-# webpack四大核心概念
+## webpack四大核心概念
 有了配置文件，就可以在配置文件内写对应的配置，配置主要包含四大核心：
 - 入口(entry)
 - 输出(output)
@@ -77,18 +77,18 @@ module.exports = {
   devServer: {}                               // 配置开发服务器
 }
 ```
-# 入口(entry)
+## 入口(entry)
 入口，则是入口文件，分为单入口和多入口两种：
 https://www.webpackjs.com/configuration/entry-context/
 
-## 单入口写法
+### 单入口写法
 ```js
 module.exports = {
   entry: './src/index.js',
   mode: 'production'
 }
 ```
-## 多入口写法
+### 多入口写法
 ```js
 module.exports = {
   mode: 'production',
@@ -103,10 +103,10 @@ module.exports = {
 }
 ```
 
-# 输出(output)
+## 输出(output)
 https://www.webpackjs.com/configuration/output/
 
-## 单出口写法
+### 单出口写法
 ```js
 module.exports = {
   entry: './src/index.js',
@@ -117,7 +117,7 @@ module.exports = {
   mode: 'production'
 }
 ```
-## 多出口写法
+### 多出口写法
 filename等等属性都可以根据文档自行配置
 ```js
 module.exports = {
@@ -133,7 +133,7 @@ module.exports = {
 }
 ```
 
-# 加载器(loader)
+## 加载器(loader)
 module下的rules 内loader执行顺序，从右到左，从下到上
 
 loader执行顺序（rules内enforce属性）：
@@ -142,8 +142,8 @@ loader执行顺序（rules内enforce属性）：
 - inline-loader（代码内使用）
 - 后置loader （post）
 
-# css的loader
-## css-loader
+## css的loader
+### css-loader
 解析css语法
 
 开启css模块化
@@ -197,19 +197,19 @@ loader执行顺序（rules内enforce属性）：
   },
 ```
 
-## style-loader
+### style-loader
 把样式插入到到html中
 
-## node-sass sass-loader
+### node-sass sass-loader
 安装sass支持
 
-## less-loader
+### less-loader
 less支持
-## stylus-loader
+### stylus-loader
 stylus支持
 
-# js的loader
-## babel-loader
+## js的loader
+### babel-loader
 调用@babel/core 插件，然后再调用@babel/preset-env进行转换
 如果使用了一些新的api 就需要使用@babel/core进行转化
 
@@ -256,7 +256,7 @@ stylus支持
 }
 ```
 
-## eslint-loader
+### eslint-loader
 在babel编译之前进行代码校验，然后运行`npx eslint --init`
 ```js
 {
@@ -264,7 +264,7 @@ stylus支持
   use: 'eslint-loader'
 },
 ```
-## ts-loader
+### ts-loader
 用ts 需要安装ts-loader和typescript
 ```js
 {
@@ -272,7 +272,7 @@ stylus支持
   use: 'ts-loader'
 },
 ```
-## tslint-loader
+### tslint-loader
 在babel编译之前进行代码校验，然后运行`npx tslint --init`
 ```js
 {
@@ -280,16 +280,16 @@ stylus支持
   use: 'tslint-loader'
 },
 ```
-# 文件的loader
-## file-loader
+## 文件的loader
+### file-loader
 复制文件到打包目录下
 
-## url-loader
+### url-loader
 如果图片小，可以做成对应的base64，减少浏览器请求次数,如果超过limit大小，仍然是复制文件到打包目录下
 
-# 插件(plugins)
+## 插件(plugins)
 基础插件其实就那么几个，其余的都是根据项目实际情况，自选一些优化插件
-## html-webpack-plugin 
+### html-webpack-plugin 
 用来根据一个模板生成打包后的html
 ```js
   const path = require('path');
@@ -311,7 +311,7 @@ stylus支持
     }
   };
 ```
-## clean-webpack-plugin
+### clean-webpack-plugin
 清空打包文件的插件
 ```js
   const path = require('path');
@@ -336,12 +336,12 @@ stylus支持
   };
 ```
 
-## mini-css-extract-plugin 
+### mini-css-extract-plugin 
 从js分离出css
-## optimize-css-assets-webpack-plugin
+### optimize-css-assets-webpack-plugin
 压缩css
 
-# devServer 开发服务器
+## devServer 开发服务器
 可以配置一个本地的开发环境，可以配置反向代理等作用。
 ```js
 devServer: {
@@ -357,7 +357,7 @@ devServer: {
   }
 ```
 
-# webpack多页面打包配置示例
+## webpack多页面打包配置示例
 ```js
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -390,7 +390,7 @@ devServer: {
     devServer: {}                               // 配置开发服务器
   }
 ```
-# webpack怎么区分是生产环境还是开发环境
+## webpack怎么区分是生产环境还是开发环境
 在配置内加入`mode: 'production'` 或者在cli参数内加入 `webpack --mode=production`
 ```js
 module.exports = {
