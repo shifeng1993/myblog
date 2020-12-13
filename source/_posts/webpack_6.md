@@ -94,7 +94,7 @@ oneOf 只可能匹配数组中的某一个，找到一个就不会再继续查�
   },
 ```
 
-### externals(外部变量+cdn)
+### externals
 - 如果想引用一个库，又不想让webpack打包进bundle，并且不影响我们在程序中用cmd amd或者window/global等全局方式进行使用
 #### 安装
 ```bash
